@@ -1,235 +1,178 @@
+#include "ArrayList.h"
 #include <GameState.h>
 
 using namespace std;
-GameState::GameState(int size){
-    this->size = size;
+GameState::GameState(int numRows, int numCols){
+    this->numRows = numRows;
+    this->numCols = numCols;
     currentTurn = 0;
-    turnCount = 0;
-    done = false;
-
+    
     enabledAI = false;
 
-    lastMove.set(-1, -1);
+    lastMove.set(-1,-1);
 
-    grid = new int*[size];
-
-    for (int i = 0; i < size; i++){
-        grid[i] = new int[size];
-        for (int j = 0; j < size; j++){
-            grid[i][j] = -1;
-        }
-    }
-}
-
-GameState::GameState(const GameState& other){
-    size = other.size;
-    currentTurn = other.currentTurn;
-    turnCount = other.turnCount;
-    done = other.done;
-    lastMove = other.lastMove;
-    enabledAI = other.enabledAI;
-
-    grid = new int*[size];
-
-    for (int i = 0; i < size; i++){
-        grid[i] = new int[size];
-        for (int j = 0; j < size; j++){
-            grid[i][j] = other.grid[i][j];
-        }
-    }
-}
-
-bool GameState::operator==(const GameState& other){
-    bool sizeMatch = size == other.size;
-    bool currentTurnMatch = currentTurn == other.currentTurn;
-    bool turnCountMatch = turnCount == other.turnCount;
-    bool doneMatch = done == other.done;
-    bool aiMatch = enabledAI == other.enabledAI;
-    bool lastMoveMatch = lastMove.x == other.lastMove.x && lastMove.y == other.lastMove.y;
-    if (sizeMatch && currentTurnMatch && turnCountMatch && doneMatch && aiMatch && lastMoveMatch){
-
-        for (int i = 0; i < size; i++){
-            for (int j = 0; j < size; j++){
-                if (grid[i][j] != other.grid[i][j]){
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
-GameState& GameState::operator=(const GameState& other){
-    currentTurn = other.currentTurn;
-    turnCount = other.turnCount;
-    done = other.done;
-    lastMove = other.lastMove;
-    enabledAI = other.enabledAI;
-    if (size == other.size){
-        for (int i = 0; i < size; i++){
-            for (int j = 0; j < size; j++){
-                grid[i][j] = other.grid[i][j];
-            }
-        }
-    }
-    else{
-        for (int i = 0; i < size; i++){
-            delete[] grid[i];
-        }
-        delete[] grid;
-
-        size = other.size;
-
-        grid = new int*[size];
-
-        for (int i = 0; i < size; i++){
-            grid[i] = new int[size];
-            for (int j = 0; j < size; j++){
-                grid[i][j] = other.grid[i][j];
-            }
-        }
-    }
-
-    return *this;
-}
-
-bool GameState::hasWon(int player){
-    for (int i = 0; i < size; i++){
-        bool winRow = true;
-        for (int j = 0; j < size; j++){
-            if (grid[i][j] != player){
-                winRow = false;
-                break;
-            }
-        }
-        if (winRow){
-            return true;
-        }
-    }
-    for (int i = 0; i < size; i++){
-        bool winCol = true;
-        for (int j = 0; j < size; j++){
-            if (grid[j][i] != player){
-                winCol = false;
-                break;
-            }
-        }
-        if (winCol){
-            return true;
-        }
-    }
-
-    bool winDiag = true;
-    for (int i = 0; i < size; i++){
-        if (grid[i][i] != player){
-            winDiag = false;
-            break;
-        }
-    }
-    if (winDiag){
-        return true;
-    }
     
-    bool winAntiDiag = true;
-    for (int i = 0; i < size; i++){
-        if (grid[i][size-1-i] != player){
-            winAntiDiag = false;
-            break;
+    for(int i = 0; i<numRows; ++i){
+        ArrayList<int> row;
+        for (int j = 0; j< numCols; ++j){
+            row.append(-1); //fill the row with -1 (empty cells)
+        }
+        board.append(row); //append the completed row to the board
+    }
+    cout<<"Initializing Connect 4 state with size"<< numRows <<"x"<<numCols <<endl;
+}
+
+//check if a player has won
+bool GameState::hasWon(int player) const{
+    cout <<"Checking whether player " <<player << " has won" <<endl;
+
+    //horizontal check
+
+    for (int row= 0; row < numRows; ++row){
+        for (int col = 0; col <= numCols - 4; ++col){
+            if (board[row][col] == player 
+            && board[row][col + 1] == player //does the same four positions belong to the same player?
+            && board[row][col + 2] == player 
+            && board[row][col + 3] == player) {
+                return true;
+            }
         }
     }
-    if (winAntiDiag){
-        return true;
+
+    //Vertical check 
+    for (int col = 0; col < numCols; ++col){
+        for (int row = 0; row <= numRows; ++row){
+            if (board[row][col] == player 
+            && board[row + 1][col] == player &&
+            board[row + 2][col] == player &&
+            board[row + 3][col] == player){
+                return true;
+                
+            }
+        }
     }
 
+    //Diagonal (bottom-left to top-right)
+    for (int row = 3; row < numRows; ++row){
+        for(int col = 0; col <= numCols - 4; ++col){
+            if (board[row][col]== player &&
+            board[row-1][col+1]== player &&
+            board[row-2][col+2]== player &&
+            board[row-3][col+3]== player){
+            return true;
+            }
+        }
+    }
+
+    //Diagonal (top-left to bottom-right)
+    for(int row = 0; row <= numRows - 4; ++row){
+        for (int col = 0; col <= numCols - 4; ++col){
+            if (board[row][col] == player &&
+            board[row+1][col+1] == player &&
+            board[row+2][col+2] == player &&
+            board[row+3][col+3] == player){
+            return true;
+            }
+        } 
+    }
     return false;
 }
 
 
-bool GameState::play(int x, int y){
-    if (grid[x][y] != -1){
+
+bool GameState::play(int col){
+    cout << "Current player makes move " << col << endl;
+    cout << "Must update state, including whose turn it is" << endl; 
+    cout << "and the last move, among other things." << endl;
+
+    if( col<0 || col >= numCols){
         return false;
     }
 
-    grid[x][y] = currentTurn;
-    currentTurn = !currentTurn;
-    turnCount++;
-    lastMove.set(x, y);
-
-    if (turnCount == size * size){
-        done = true;
-    }
-    else if (hasWon(0) || hasWon(1)){
-        done = true;
+    for(int row = numRows - 1; row >= 0; --row){
+        if (board[row][col]== -1){
+            board[row][col] = currentTurn;
+            lastMove.set(row, col);
+            currentTurn = !currentTurn;
+            return true;
+        }
     }
 
-    return true;
-}
-
-int GameState::gridSize() const {
-    return size;
+    return false; //column full
 }
 
 
 int GameState::getCurrentTurn() const {
-    return currentTurn;
-}
+    cout <<"Whose turn is it?" <<endl;
+    return 0;
+ }
 
 
-bool GameState::gameOver() const {
-    return done;
-}
+ bool GameState::gameOver() const {
+    cout << "Checking if the game is over" << endl;
+  if(hasWon(0) || hasWon(1)){
+    return true;
+   }
 
-string GameState::squareState(int i, int j) const {
-    if (grid[i][j] == 0){
-        return "X";
-    }
-    else if (grid[i][j] == 1){
-        return "O";
-    }
+   
+   return true;
+ }
+
+ int GameState::getSize() const {
+    return numRows * numCols;
+ }
+
+ Vec GameState::getBoardDimensions() const{
+    return Vec(numRows, numCols);
+ }
+
+// string GameState::squareState(int i, int j) const {
+//     if (grid[i][j] == 0){
+//         return "X";
+//     }
+//     else if (grid[i][j] == 1){
+//         return "O";
+//     }
     
-    return "";
-}
+//     return "";
+// }
 
-Vec GameState::getLastMove() const {
-    return lastMove;
-}
+// Vec GameState::getLastMove() const {
+//     return lastMove;
+// }
 
 
-void GameState::reset(){
-    currentTurn = 0;
-    turnCount = 0;
-    done = false;
+// void GameState::reset(){
+//     currentTurn = 0;
+//     turnCount = 0;
+//     done = false;
 
-    lastMove.set(-1, -1);
+//     lastMove.set(-1, -1);
 
-    for (int i = 0; i < size; i++){
-        for (int j = 0; j < size; j++){
-            grid[i][j] = -1;
-        }
-    }
-}
+//     for (int i = 0; i < size; i++){
+//         for (int j = 0; j < size; j++){
+//             grid[i][j] = -1;
+//         }
+//     }
+// }
 
-void GameState::enableAI(){
-    enabledAI = true;
-}
+// void GameState::enableAI(){
+//     enabledAI = true;
+// }
 
-void GameState::disableAI(){
-    enabledAI = false;
-}
+// void GameState::disableAI(){
+//     enabledAI = false;
+// }
 
-bool GameState::getEnabledAI() const{
-    return enabledAI;
-}
+// bool GameState::getEnabledAI() const{
+//     return enabledAI;
+// }
 
-GameState::~GameState(){
-    for (int i = 0; i < size; i++){
-        delete[] grid[i];
-    }
-    delete[] grid;
-}
+// GameState::~GameState(){
+//     for (int i = 0; i < size; i++){
+//         delete[] grid[i];
+//     }
+//     delete[] grid;
+// }
 
 
