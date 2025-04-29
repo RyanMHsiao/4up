@@ -4,7 +4,7 @@
 using namespace std;
 GameState::GameState(int numRows, int numCols){
     this->numRows = numRows;
-    this->numCols = numRows;
+    this->numCols = numCols;
     currentTurn = 0;
     
     enabledAI = false;
@@ -79,39 +79,52 @@ bool GameState::hasWon(int player) const{
 }
 
 
-// bool GameState::play(int x, int y){
-//     if (grid[x][y] != -1){
-//         return false;
-//     }
 
-//     grid[x][y] = currentTurn;
-//     currentTurn = !currentTurn;
-//     turnCount++;
-//     lastMove.set(x, y);
+bool GameState::play(int col){
+    cout << "Current player makes move " << col << endl;
+    cout << "Must update state, including whose turn it is" << endl; 
+    cout << "and the last move, among other things." << endl;
 
-//     if (turnCount == size * size){
-//         done = true;
-//     }
-//     else if (hasWon(0) || hasWon(1)){
-//         done = true;
-//     }
+    if( col<0 || col >= numCols){
+        return false;
+    }
 
-//     return true;
-// }
+    for(int row = numRows - 1; row >= 0; --row){
+        if (board[row][col]== -1){
+            board[row][col] = currentTurn;
+            lastMove.set(row, col);
+            currentTurn = !currentTurn;
+            return true;
+        }
+    }
 
-// int GameState::gridSize() const {
-//     return size;
-// }
+    return false; //column full
+}
 
 
-// int GameState::getCurrentTurn() const {
-//     return currentTurn;
-// }
+int GameState::getCurrentTurn() const {
+    cout <<"Whose turn is it?" <<endl;
+    return 0;
+ }
 
 
-// bool GameState::gameOver() const {
-//     return done;
-// }
+ bool GameState::gameOver() const {
+    cout << "Checking if the game is over" << endl;
+  if(hasWon(0) || hasWon(1)){
+    return true;
+   }
+
+   
+   return true;
+ }
+
+ int GameState::getSize() const {
+    return numRows * numCols;
+ }
+
+ Vec GameState::getBoardDimensions() const{
+    return Vec(numRows, numCols);
+ }
 
 // string GameState::squareState(int i, int j) const {
 //     if (grid[i][j] == 0){
