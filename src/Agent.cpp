@@ -3,6 +3,7 @@
 #include "Graph.h"
 #include <iostream>
 #include <Agent.h>
+#include "GameState.h"
 
 using namespace std;
 
@@ -17,11 +18,11 @@ struct GameTreeNode{
 };
 
 Vec findFirstAvailable(GameState state){
-    for (int i = 0; i < state.getSize(); i++){
-        for (int j = 0; j < state.getSize(); j++){
-            // if (state.squareState(i, j) == ""){
-            //     return Vec(i, j);
-            // }
+    for (int i = 0; i < state.getRows(); i++){
+        for (int j = 0; j < state.getCols(); j++){
+            if (state.board[i][j] == 0){
+                return Ve, j);
+            }
         }
     }
 
