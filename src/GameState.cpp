@@ -22,132 +22,61 @@ GameState::GameState(int numRows, int numCols){
     cout<<"Initializing Connect 4 state with size"<< numRows <<"x"<<numCols <<endl;
 }
 
-// GameState::GameState(const GameState& other){
-//     size = other.size;
-//     currentTurn = other.currentTurn;
-//     turnCount = other.turnCount;
-//     done = other.done;
-//     lastMove = other.lastMove;
-//     enabledAI = other.enabledAI;
+//check if a player has won
+bool GameState::hasWon(int player) const{
+    cout <<"Checking whether player " <<player << " has won" <<endl;
 
-//     grid = new int*[size];
+    //horizontal check
 
-//     for (int i = 0; i < size; i++){
-//         grid[i] = new int[size];
-//         for (int j = 0; j < size; j++){
-//             grid[i][j] = other.grid[i][j];
-//         }
-//     }
-// }
+    for (int row= 0; row < numRows; ++row){
+        for (int col = 0; col <= numCols - 4; ++col){
+            if (board[row][col] == player 
+            && board[row][col + 1] == player //does the same four positions belong to the same player?
+            && board[row][col + 2] == player 
+            && board[row][col + 3] == player) {
+                return true;
+            }
+        }
+    }
 
-// bool GameState::operator==(const GameState& other){
-//     bool sizeMatch = size == other.size;
-//     bool currentTurnMatch = currentTurn == other.currentTurn;
-//     bool turnCountMatch = turnCount == other.turnCount;
-//     bool doneMatch = done == other.done;
-//     bool aiMatch = enabledAI == other.enabledAI;
-//     bool lastMoveMatch = lastMove.x == other.lastMove.x && lastMove.y == other.lastMove.y;
-//     if (sizeMatch && currentTurnMatch && turnCountMatch && doneMatch && aiMatch && lastMoveMatch){
+    //Vertical check 
+    for (int col = 0; col < numCols; ++col){
+        for (int row = 0; row <= numRows; ++row){
+            if (board[row][col] == player 
+            && board[row + 1][col] == player &&
+            board[row + 2][col] == player &&
+            board[row + 3][col] == player){
+                return true;
+                
+            }
+        }
+    }
 
-//         for (int i = 0; i < size; i++){
-//             for (int j = 0; j < size; j++){
-//                 if (grid[i][j] != other.grid[i][j]){
-//                     return false;
-//                 }
-//             }
-//         }
+    //Diagonal (bottom-left to top-right)
+    for (int row = 3; row < numRows; ++row){
+        for(int col = 0; col <= numCols - 4; ++col){
+            if (board[row][col]== player &&
+            board[row-1][col+1]== player &&
+            board[row-2][col+2]== player &&
+            board[row-3][col+3]== player){
+            return true;
+            }
+        }
+    }
 
-//         return true;
-//     }
-//     else{
-//         return false;
-//     }
-// }
-
-// GameState& GameState::operator=(const GameState& other){
-//     currentTurn = other.currentTurn;
-//     turnCount = other.turnCount;
-//     done = other.done;
-//     lastMove = other.lastMove;
-//     enabledAI = other.enabledAI;
-//     if (size == other.size){
-//         for (int i = 0; i < size; i++){
-//             for (int j = 0; j < size; j++){
-//                 grid[i][j] = other.grid[i][j];
-//             }
-//         }
-//     }
-//     else{
-//         for (int i = 0; i < size; i++){
-//             delete[] grid[i];
-//         }
-//         delete[] grid;
-
-//         size = other.size;
-
-//         grid = new int*[size];
-
-//         for (int i = 0; i < size; i++){
-//             grid[i] = new int[size];
-//             for (int j = 0; j < size; j++){
-//                 grid[i][j] = other.grid[i][j];
-//             }
-//         }
-//     }
-
-//     return *this;
-// }
-
-// bool GameState::hasWon(int player){
-//     for (int i = 0; i < size; i++){
-//         bool winRow = true;
-//         for (int j = 0; j < size; j++){
-//             if (grid[i][j] != player){
-//                 winRow = false;
-//                 break;
-//             }
-//         }
-//         if (winRow){
-//             return true;
-//         }
-//     }
-//     for (int i = 0; i < size; i++){
-//         bool winCol = true;
-//         for (int j = 0; j < size; j++){
-//             if (grid[j][i] != player){
-//                 winCol = false;
-//                 break;
-//             }
-//         }
-//         if (winCol){
-//             return true;
-//         }
-//     }
-
-//     bool winDiag = true;
-//     for (int i = 0; i < size; i++){
-//         if (grid[i][i] != player){
-//             winDiag = false;
-//             break;
-//         }
-//     }
-//     if (winDiag){
-//         return true;
-//     }
-    
-//     bool winAntiDiag = true;
-//     for (int i = 0; i < size; i++){
-//         if (grid[i][size-1-i] != player){
-//             winAntiDiag = false;
-//             break;
-//         }
-//     }
-//     if (winAntiDiag){
-//         return true;
-//     }
-
-//     return false;
-// }
+    //Diagonal (top-left to bottom-right)
+    for(int row = 0; row <= numRows - 4; ++row){
+        for (int col = 0; col <= numCols - 4; ++col){
+            if (board[row][col] == player &&
+            board[row+1][col+1] == player &&
+            board[row+2][col+2] == player &&
+            board[row+3][col+3] == player){
+            return true;
+            }
+        } 
+    }
+    return false;
+}
 
 
 // bool GameState::play(int x, int y){
