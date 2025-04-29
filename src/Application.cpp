@@ -8,7 +8,6 @@ using namespace bobcat;
 using namespace std;
 
 Application::Application(){
-    state = GameState();
     /*
     window = new Window(100, 100, 400, 400, "Connect4");
 
@@ -42,6 +41,19 @@ Application::Application(){
     window->show();
     */
 }
+
+void Application::runTUI(int rows, int cols) {
+    state = GameState(rows, cols);
+    while (!state.gameOver()) {
+        std::cout << state << "\n";
+        int choice;
+        std::cin >> choice;
+        state.play(choice);
+    }
+    std::cout << state << "\n";
+    std::cout << "game over\n";
+}
+
 /*
 void Application::handleNewGameMenuClick(Widget *sender){
     gameInterface->reset();

@@ -39,6 +39,7 @@ class Application: public bobcat::Application_ {
 
 public:
     Application();
+    void runTUI(int rows, int cols);
 };
 
 #endif
