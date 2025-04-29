@@ -41,7 +41,7 @@ bool GameState::hasWon(int player) const{
 
     //Vertical check 
     for (int col = 0; col < numCols; ++col){
-        for (int row = 0; row <= numRows; ++row){
+        for (int row = 0; row <= numRows - 4; ++row){
             if (board[row][col] == player 
             && board[row + 1][col] == player &&
             board[row + 2][col] == player &&
@@ -94,6 +94,7 @@ bool GameState::play(int col){
             board[row][col] = currentTurn;
             lastMove.set(row, col);
             currentTurn = !currentTurn;
+            elapsedTurns += 1;
             return true;
         }
     }
@@ -110,12 +111,12 @@ int GameState::getCurrentTurn() const {
 
  bool GameState::gameOver() const {
     cout << "Checking if the game is over" << endl;
-  if(hasWon(0) || hasWon(1)){
-    return true;
-   }
+    if(hasWon(0) || hasWon(1)){
+        return true;
+    }
 
    
-   return true;
+   return false;
  }
 
  int GameState::getSize() const {
@@ -133,26 +134,28 @@ bool GameState::hasSpace(int col) const {
 std::string GameState::squareState(int row, int col) const {
     if (board[row][col] == -1) {
         return "";
-    } else if (board[row][col == 0]) {
+    } else if (board[row][col] == 0) {
         return "red";
     } else {
         return "yellow";
     }
 }
-
-// string GameState::squareState(int i, int j) const {
-//     if (grid[i][j] == 0){
-//         return "X";
-//     }
-//     else if (grid[i][j] == 1){
-//         return "O";
-//     }
-    
-//     return "";
-// }
+char GameState::squareStateChar(int row, int col) const {
+    if (board[row][col] == -1) {
+        return ' ';
+    } else if (board[row][col] == 0) {
+        return 'X';
+    } else {
+        return 'O';
+    }
+}
 
 Vec GameState::getLastMove() const {
     return lastMove;
+}
+
+int GameState::getElapsedTurns() const {
+    return elapsedTurns;
 }
 
 
