@@ -6,10 +6,15 @@ using namespace std;
 
 int main(){
 
+    // The logic related to app.run is complicated and hidden to us
+    // So we instead just use our own functions for this phase of testing
     Application app;
 
-    return app.run();
+    app.runTUI(7, 6);
 
+    // return app.run();
+
+    
 
     // GameState state;
     // state.play(0, 0);
