@@ -72,12 +72,21 @@ public:
 
     std::string squareState(int row, int col) const;
 
+    char squareStateChar(int row, int col) const;
+
 
     friend std::ostream& operator<<(std::ostream& os, const GameState& state);
 };
 
 inline std::ostream& operator<<(std::ostream& os, const GameState& state){
     os << "Printing the game state";
+
+    for (int y = 0; y < state.getRows(); ++y) {
+        for (int x = 0; x < state.getCols(); ++x) {
+            os << state.squareStateChar(y, x);
+        }
+        os << "\n";
+    }
 
     return os;
 }
