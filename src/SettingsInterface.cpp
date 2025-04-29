@@ -6,6 +6,7 @@ using namespace std;
 using namespace bobcat;
 
 SettingsInterface::SettingsInterface(int x, int y, int w, int h, GameState state){
+    /*
     visible = true;
     this->x = x;
     this->y = y;
@@ -32,9 +33,11 @@ SettingsInterface::SettingsInterface(int x, int y, int w, int h, GameState state
     else {
         enableAISelector->value(1);
     }
+    */
 }
 
 void SettingsInterface::applyUpdates(){
+    /*
     int newSize = 0;
     bool shouldEnableAI = false;
 
@@ -55,7 +58,7 @@ void SettingsInterface::applyUpdates(){
         shouldEnableAI = false;
     }
     
-    if (newSize != state.gridSize()){
+    if (newSize != state.getCols()){
         state = GameState(newSize);
     }
 
@@ -65,21 +68,25 @@ void SettingsInterface::applyUpdates(){
     else{
         state.disableAI();
     }
-
+    */
 }
 
 void SettingsInterface::hide(){
+    /*
     visible = false;
     pageHeading->hide();
     gridSizeSelector->hide();
     enableAISelector->hide();
+    */
 }
 
 void SettingsInterface::show(){
+    /*
     visible = true;
     pageHeading->show();
     gridSizeSelector->show();
     enableAISelector->show();
+    */
 }
 
 GameState SettingsInterface::getState() const{

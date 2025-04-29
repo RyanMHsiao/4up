@@ -126,6 +126,20 @@ int GameState::getCurrentTurn() const {
     return Vec(numRows, numCols);
  }
 
+bool GameState::hasSpace(int col) const {
+    return board[0][col] == -1;
+}
+
+std::string GameState::squareState(int row, int col) const {
+    if (board[row][col] == -1) {
+        return "";
+    } else if (board[row][col == 0]) {
+        return "red";
+    } else {
+        return "yellow";
+    }
+}
+
 // string GameState::squareState(int i, int j) const {
 //     if (grid[i][j] == 0){
 //         return "X";
@@ -137,36 +151,46 @@ int GameState::getCurrentTurn() const {
 //     return "";
 // }
 
-// Vec GameState::getLastMove() const {
-//     return lastMove;
-// }
+Vec GameState::getLastMove() const {
+    return lastMove;
+}
 
 
-// void GameState::reset(){
-//     currentTurn = 0;
-//     turnCount = 0;
-//     done = false;
+void GameState::reset(){
+    /*
+    currentTurn = 0;
+    turnCount = 0;
+    done = false;
 
-//     lastMove.set(-1, -1);
+    lastMove.set(-1, -1);
 
-//     for (int i = 0; i < size; i++){
-//         for (int j = 0; j < size; j++){
-//             grid[i][j] = -1;
-//         }
-//     }
-// }
+    for (int i = 0; i < size; i++){
+        for (int j = 0; j < size; j++){
+            grid[i][j] = -1;
+        }
+    }
+    */
+}
 
-// void GameState::enableAI(){
-//     enabledAI = true;
-// }
+void GameState::enableAI(){
+    enabledAI = true;
+}
 
-// void GameState::disableAI(){
-//     enabledAI = false;
-// }
+void GameState::disableAI(){
+    enabledAI = false;
+}
 
-// bool GameState::getEnabledAI() const{
-//     return enabledAI;
-// }
+bool GameState::getEnabledAI() const{
+     return enabledAI;
+}
+
+int GameState::getCols() const {
+    return numCols;
+}
+
+int GameState::getRows() const {
+    return numRows;
+}
 
 // GameState::~GameState(){
 //     for (int i = 0; i < size; i++){

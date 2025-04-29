@@ -62,12 +62,15 @@ public:
 
     bool getEnabledAI() const; //is the AI on?
 
+    bool hasSpace(int col) const;
 
     Vec getLastMove() const; //get the last move (row, col)
 
     void reset();
 
     Vec getBoardDimensions() const;
+
+    std::string squareState(int row, int col) const;
 
 
     friend std::ostream& operator<<(std::ostream& os, const GameState& state);
