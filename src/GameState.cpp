@@ -94,6 +94,7 @@ bool GameState::play(int col){
             board[row][col] = currentTurn;
             lastMove.set(row, col);
             currentTurn = !currentTurn;
+            elapsedTurns += 1;
             return true;
         }
     }
@@ -151,6 +152,10 @@ char GameState::squareStateChar(int row, int col) const {
 
 Vec GameState::getLastMove() const {
     return lastMove;
+}
+
+int GameState::getElapsedTurns() const {
+    return elapsedTurns;
 }
 
 

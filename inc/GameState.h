@@ -36,6 +36,7 @@ class GameState{
     bool currentTurn; //0 = player 0, 1 = player 1
     bool enabledAI;
     Vec lastMove;
+    int elapsedTurns;
     
 public:
 //Initialize default game state
@@ -73,6 +74,8 @@ public:
     std::string squareState(int row, int col) const;
 
     char squareStateChar(int row, int col) const;
+
+    int getElapsedTurns() const;
 
 
     friend std::ostream& operator<<(std::ostream& os, const GameState& state);
