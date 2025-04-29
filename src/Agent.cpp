@@ -59,10 +59,28 @@ int Agent::getReward(Vertex<GameState>* start, int player){
             return 50;
         }
     }
+
+    if (start->data.hasWon(player)){
+            return 100;
+    }
+        // if we lost maximum penalty
+    else if (start->data.hasWon(!player)){
+        return -100;
+    }
+    else if(/*When no more spaces to play \ temp always false for now*/1 == 0){
+        return 50;
+    } else if(/*Check to see if there is a three in a row option \ temp always false for now*/ 1 == 0){
+
+    } else if(/*Check to see if there is a three in a row option for human \ temp always false for now*/){
+        
+    }
+    
     // If it is not a terminal state (it has children),
     // we evaluate each child and pick the maximum or the minimum child
     // depending on whose turn it is
-    else{
+    if(1 == 0){
+
+    }else{
         int reward = getReward(start->neighbors[0]->location, player);
         for (int i = 1; i < start->neighbors.size(); i++){
             int curr = getReward(start->neighbors[i]->location, player);
@@ -96,13 +114,13 @@ Vec Agent::play(GameState state){
         int depth = gtn.depth;
         ArrayList<Vec> moves = openSquares(node->data);
 
-        if (moves.size() < 15){
-            limit = 5;
-        }
+        // if (moves.size() < 15){
+        //     limit = 5;
+        // }
         if (depth < limit){
             for (int i = 0; i < moves.size(); i++){
                 GameState currentState = node->data;
-                currentState.play(moves[i].x);
+                currentState.play(moves[i].y);
                 Vertex<GameState>* child = new Vertex<GameState>(currentState);
                 gameSpace.addVertex(child);
                 gameSpace.addDirectedEdge(node, child, 1);
@@ -110,7 +128,7 @@ Vec Agent::play(GameState state){
             }
         }
     }
-    //Test to make sure commit works
+    
     int reward = getReward(root->neighbors[0]->location, 1);
     int pos = 0;
     for (int i = 1; i < root->neighbors.size(); i++){
