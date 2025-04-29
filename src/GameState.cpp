@@ -137,42 +137,40 @@ int GameState::getCurrentTurn() const {
 //     return "";
 // }
 
-// Vec GameState::getLastMove() const {
-//     return lastMove;
-// }
+Vec GameState::getLastMove() const {
+    cout << "Getting the last move that was made" << endl;
+
+    return lastMove;
+}
 
 
-// void GameState::reset(){
-//     currentTurn = 0;
-//     turnCount = 0;
-//     done = false;
+void GameState::reset(){
+    currentTurn = 0;
+    lastMove.set(-1, -1);
+    enabledAI = false;
 
-//     lastMove.set(-1, -1);
+    //Clear and reinitialize the board with -1 (empty)
+    for (int i = 0; i < numRows; i++){
+        for (int j = 0; j < numCols; j++){
+            board[i][j] = -1;
+        }
+    }
 
-//     for (int i = 0; i < size; i++){
-//         for (int j = 0; j < size; j++){
-//             grid[i][j] = -1;
-//         }
-//     }
-// }
+    cout << "Game state reset to empty" << numRows <<"x" << numCols << "board." <<endl;
+}
 
-// void GameState::enableAI(){
-//     enabledAI = true;
-// }
+void GameState::enableAI(){
+    enabledAI = true;
+}
 
-// void GameState::disableAI(){
-//     enabledAI = false;
-// }
+void GameState::disableAI(){
+    enabledAI = false;
+}
 
-// bool GameState::getEnabledAI() const{
-//     return enabledAI;
-// }
+bool GameState::getEnabledAI() const{
+    return enabledAI;
+}
 
-// GameState::~GameState(){
-//     for (int i = 0; i < size; i++){
-//         delete[] grid[i];
-//     }
-//     delete[] grid;
-// }
+
 
 
