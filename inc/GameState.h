@@ -4,20 +4,42 @@
 #include <iostream>
 #include "ArrayList.h"
 
+struct Vec{
+    int x;
+    int y;
+
+    Vec(){
+        x = 0;
+        y = 0;
+    }
+
+    Vec(int x, int y){
+        this->x = x;
+        this->y = y;
+    }
+
+    void set(int x, int y){
+        this->x = x;
+        this->y = y;
+    }
+
+};
+
 
 class GameState{
     // variables needed for state:
     //Size of the game, board, whose turn is it, is AI enabled
 
     ArrayList<ArrayList<int>> board; //2d board (6 rows x 7 columns)
+    int numRows;
+    int numCols;
     bool currentTurn; //0 = player 0, 1 = player 1
     bool enabledAI;
-    int lastRow;
-    int lastCol;
+    Vec lastMove;
     
 public:
 //Initialize default game state
-    GameState();
+    GameState(int numRows = 6, int numCols = 7); //constructor with default 6x7
 
     int getRows() const;
     int getCols() const;
@@ -41,8 +63,7 @@ public:
     bool getEnabledAI() const; //is the AI on?
 
 
-    int getLastRow() const;
-    int getLastCol() const;
+    Vec getLastMove() const; //get the last move (row, col)
 
     void reset();
 
