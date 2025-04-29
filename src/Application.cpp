@@ -8,6 +8,8 @@ using namespace bobcat;
 using namespace std;
 
 Application::Application(){
+    state = GameState();
+    /*
     window = new Window(100, 100, 400, 400, "Connect4");
 
     state = GameState();
@@ -38,8 +40,9 @@ Application::Application(){
     ON_CLICK(applyButton, Application::handleApplyBtnClick);
 
     window->show();
+    */
 }
-
+/*
 void Application::handleNewGameMenuClick(Widget *sender){
     gameInterface->reset();
 }
@@ -75,3 +78,4 @@ void Application::handleApplyBtnClick(Widget* sender){
 void Application::handleQuitMenuClick(Widget *sender){
     exit(0);
 }
+*/
