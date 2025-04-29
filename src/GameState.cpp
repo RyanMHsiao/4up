@@ -22,6 +22,12 @@ GameState::GameState(int numRows, int numCols){
     cout<<"Initializing Connect 4 state with size"<< numRows <<"x"<<numCols <<endl;
 }
 
+//For the agent, used to see if the person being checked is one off from winning
+bool GameState::closeToWin(int player) const{
+    
+}
+
+
 //check if a player has won
 bool GameState::hasWon(int player) const{
     cout <<"Checking whether player " <<player << " has won" <<endl;

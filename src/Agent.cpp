@@ -59,28 +59,10 @@ int Agent::getReward(Vertex<GameState>* start, int player){
             return 50;
         }
     }
-
-    if (start->data.hasWon(player)){
-            return 100;
-    }
-        // if we lost maximum penalty
-    else if (start->data.hasWon(!player)){
-        return -100;
-    }
-    else if(/*When no more spaces to play \ temp always false for now*/1 == 0){
-        return 50;
-    } else if(/*Check to see if there is a three in a row option \ temp always false for now*/ 1 == 0){
-
-    } else if(/*Check to see if there is a three in a row option for human \ temp always false for now*/){
-        
-    }
-    
     // If it is not a terminal state (it has children),
     // we evaluate each child and pick the maximum or the minimum child
     // depending on whose turn it is
-    if(1 == 0){
-
-    }else{
+    else{
         int reward = getReward(start->neighbors[0]->location, player);
         for (int i = 1; i < start->neighbors.size(); i++){
             int curr = getReward(start->neighbors[i]->location, player);
