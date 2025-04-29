@@ -17,11 +17,11 @@ struct GameTreeNode{
 };
 
 Vec findFirstAvailable(GameState state){
-    for (int i = 0; i < state.gridSize(); i++){
-        for (int j = 0; j < state.gridSize(); j++){
-            if (state.squareState(i, j) == ""){
-                return Vec(i, j);
-            }
+    for (int i = 0; i < state.getSize(); i++){
+        for (int j = 0; j < state.getSize(); j++){
+            // if (state.squareState(i, j) == ""){
+            //     return Vec(i, j);
+            // }
         }
     }
 
@@ -31,11 +31,11 @@ Vec findFirstAvailable(GameState state){
 ArrayList<Vec> openSquares(GameState state){
     ArrayList<Vec> result;
     if (!state.gameOver()){
-        for (int i = 0; i < state.gridSize(); i++){
-            for (int j = 0; j < state.gridSize(); j++){
-                if (state.squareState(i, j) == ""){
-                    result.append(Vec(i,j));
-                }
+        for (int i = 0; i < state.getSize(); i++){
+            for (int j = 0; j < state.getSize(); j++){
+                // if (state.squareState(i, j) == ""){
+                //     result.append(Vec(i,j));
+                // }
             }
         }
     }
@@ -98,7 +98,7 @@ Vec Agent::play(GameState state){
         int depth = gtn.depth;
         ArrayList<Vec> moves = openSquares(node->data);
 
-        if (state.gridSize() == 3){
+        if (state.getSize() == 3){
             limit = 6;
         }
         else{
@@ -109,7 +109,7 @@ Vec Agent::play(GameState state){
         if (depth < limit){
             for (int i = 0; i < moves.size(); i++){
                 GameState currentState = node->data;
-                currentState.play(moves[i].x, moves[i].y);
+                currentState.play(moves[i].x);
                 Vertex<GameState>* child = new Vertex<GameState>(currentState);
                 gameSpace.addVertex(child);
                 gameSpace.addDirectedEdge(node, child, 1);
@@ -117,7 +117,7 @@ Vec Agent::play(GameState state){
             }
         }
     }
-
+    //Test to make sure commit works
     int reward = getReward(root->neighbors[0]->location, 1);
     int pos = 0;
     for (int i = 1; i < root->neighbors.size(); i++){
