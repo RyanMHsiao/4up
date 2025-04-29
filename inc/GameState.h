@@ -2,123 +2,58 @@
 #define GAME_STATE_H
 
 #include <iostream>
+#include "ArrayList.h"
 
-// struct Vec{
-//     int x;
-//     int y;
-
-//     Vec(){
-//         x = 0;
-//         y = 0;
-//     }
-
-//     Vec(int x, int y){
-//         this->x = x;
-//         this->y = y;
-//     }
-
-//     void set(int x, int y){
-//         this->x = x;
-//         this->y = y;
-//     }
-// };
-
-// inline std::ostream& operator<<(std::ostream& os, const Vec& v){
-//     os << "(" << v.x << ", " << v.y << ")";
-
-//     return os;
-// }
 
 class GameState{
-    // int** grid;
-    bool currentTurn;
-    int size;
-    int turnCount;
+    // variables needed for state:
+    //Size of the game, board, whose turn is it, is AI enabled
 
+    ArrayList<ArrayList<int>> board; //2d board (6 rows x 7 columns)
+    bool currentTurn; //0 = player 0, 1 = player 1
     bool enabledAI;
-    bool done;
-    // Vec lastMove;
-
-    //new code
-    static const int ROWS = 6;
-    static const int COLS = 7;
-
-    char board [ROWS][COLS];
-    int currentPlayer; // 0 or 1
     int lastRow;
     int lastCol;
-
+    
 public:
+//Initialize default game state
     GameState();
 
-    // GameState(const GameState& other);
+    int getRows() const;
+    int getCols() const;
 
-    // bool operator==(const GameState& other);
+    int getCurrentTurn() const; //whose turn?
 
-    // GameState& operator=(const GameState& other);
+    int buttonState(int row, int col) const;
 
-    bool hasWon(int player);
+    bool play(int col); //play into a column, update state resulting from players move
 
-    bool gameOver() const;
+    bool hasWon(int player) const; //has a player won?
 
-    bool play(int col);
+    bool gameOver() const; //is the game over?
 
-    // int gridSize() const;
+    int getSize() const; //what is the size of the game
 
-    // std::string squareState(int i, int j) const;
+    void enableAI(); //turn on the AI
 
-    void enableAI();
+    void disableAI(); //turn off the AI
 
-    void disableAI();
+    bool getEnabledAI() const; //is the AI on?
 
-    bool getEnabledAI() const;
 
-    int getCurrentPlayer() const;
-    char getCell(int row, int col) const;
     int getLastRow() const;
     int getLastCol() const;
 
-    // Vec getLastMove() const;
-
     void reset();
 
-    // ~GameState();
 
     friend std::ostream& operator<<(std::ostream& os, const GameState& state);
 };
 
-// inline std::ostream& operator<<(std::ostream& os, const GameState& state){
-//     os << "   ";
-//     for (int j = 0; j < state.size; j++){
-//         os << " " << j << "  ";
-//     }
-//     os << std::endl;
-//     os << "   ";
-//     for (int j = 0; j < state.size; j++){
-//         os << "--- ";
-//     }
-//     os << std::endl;
-//     for (int i = 0; i < state.size; i++){
-//         os << i << " ";
-//         for (int j = 0; j < state.size; j++){
-//             char c = ' ';
-//             if (state.grid[i][j] == 0){
-//                 c = 'X';
-//             }
-//             else if (state.grid[i][j] == 1){
-//                 c = 'O';
-//             }
-//             os << "| " << c << " ";
-//             if (j == state.size - 1) os << "|";
-//         }
-//         os << std::endl << "   ";
-//         for (int j = 0; j < state.size; j++){
-//             os << "--- ";
-//         }
-//         os << std::endl;
-//     }
+inline std::ostream& operator<<(std::ostream& os, const GameState& state){
+    os << "Printing the game state";
 
-//     return os;
-// }
+    return os;
+}
 
 #endif
