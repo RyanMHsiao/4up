@@ -6,6 +6,7 @@ GameState::GameState(int numRows, int numCols){
     this->numRows = numRows;
     this->numCols = numCols;
     currentTurn = 0;
+    done = false;
     
     enabledAI = false;
 
@@ -21,6 +22,40 @@ GameState::GameState(int numRows, int numCols){
     }
     cout<<"Initializing Connect 4 state with size"<< numRows <<"x"<<numCols <<endl;
 }
+
+//copy constructor
+
+GameState::GameState(const GameState& other){
+    numRows = other.numRows;
+    numCols = other.numCols;
+    currentTurn = other.currentTurn;
+    enabledAI = other.enabledAI;
+    lastMove = other.lastMove;
+
+    //Deep copy the 2D board
+
+    for(int i = 0; i< other.board.size(); i++){
+        board.append(other.board[i]);
+
+    }
+}
+
+//copy assignment operator
+GameState& GameState::operator=(const GameState & other){
+if(this != &other ){
+    numRows = other.numRows;
+    numCols = other.numCols;
+    currentTurn = other.currentTurn;
+    enabledAI = other.enabledAI;
+    lastMove = other.lastMove;
+    board = other.board; //triggering ArrayList deep copy
+
+}
+return *this;
+
+}
+
+
 
 //check if a player has won
 bool GameState::hasWon(int player) const{

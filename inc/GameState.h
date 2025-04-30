@@ -36,10 +36,15 @@ class GameState{
     bool currentTurn; //0 = player 0, 1 = player 1
     bool enabledAI;
     Vec lastMove;
+    bool done;
     
 public:
 //Initialize default game state
     GameState(int numRows = 6, int numCols = 7); //constructor with default 6x7
+
+    GameState(const GameState& other);
+
+    GameState& operator=(const GameState& other);
 
     int getRows() const;
     int getCols() const;
@@ -61,6 +66,12 @@ public:
     void disableAI(); //turn off the AI
 
     bool getEnabledAI() const; //is the AI on?
+
+    //is the board completely filled
+    //if all columns are occupied and no player has won, we have a tie
+    bool isFull() const; 
+
+    
 
 
     Vec getLastMove() const; //get the last move (row, col)
