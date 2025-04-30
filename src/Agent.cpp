@@ -46,18 +46,15 @@ int Agent::getReward(Vertex<GameState>* start, int player){
 
     // If it is a terminal state, evaluate it directly
     if (start->neighbors.size() == 0){
-        // If we won, maximum reward
-        if (start->data.hasWon(player)){
-            return 100;
-        }
-        // if we lost maximum penalty
-        else if (start->data.hasWon(!player)){
-            return -100;
-        }
-        // otherwise somewhere in-between
-        else{
-            return 50;
-        }
+            if (start->data.hasWon(player)){
+                return 100;
+            }
+            else if (start->data.hasWon(!player)){
+                return -100;
+            }
+            else{
+                return 50;
+            }
     }
     // If it is not a terminal state (it has children),
     // we evaluate each child and pick the maximum or the minimum child
