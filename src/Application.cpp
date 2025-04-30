@@ -3,6 +3,7 @@
 #include <bobcat_ui/bobcat_ui.h>
 #include <bobcat_ui/button.h>
 #include <cstdlib>
+#include "Agent.h"
 
 using namespace bobcat;
 using namespace std;
@@ -44,11 +45,24 @@ Application::Application(){
 
 void Application::runTUI(int rows, int cols) {
     state = GameState(rows, cols);
+    bool artificial = true;
+    bool artificialPlay = false;
+    // agent = Agent();
+
     while (!state.gameOver()) {
-        std::cout << state << "\n";
-        int choice;
-        std::cin >> choice;
-        state.play(choice);
+        if(artificialPlay && artificial){
+            Vec spot = Agent::play(state);
+            state.play(spot.y);
+            artificialPlay = false;
+        } else {
+
+            std::cout << state << "\n";
+            int choice;
+            std::cin >> choice;
+            
+            state.play(choice);
+            artificialPlay = true;
+        }
     }
     std::cout << state << "\n";
     std::cout << "game over\n";
