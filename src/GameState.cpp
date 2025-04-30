@@ -19,12 +19,18 @@ GameState::GameState(int numRows, int numCols){
         }
         board.append(row); //append the completed row to the board
     }
-    cout<<"Initializing Connect 4 state with size"<< numRows <<"x"<<numCols <<endl;
+    // cout<<"Initializing Connect 4 state with size"<< numRows <<"x"<<numCols <<endl;
 }
+
+//For the agent, used to see if the person being checked is one off from winning
+// bool GameState::closeToWin(int player) const{
+
+// }
+
 
 //check if a player has won
 bool GameState::hasWon(int player) const{
-    cout <<"Checking whether player " <<player << " has won" <<endl;
+    // cout <<"Checking whether player " <<player << " has won" <<endl;
 
     //horizontal check
 
@@ -41,7 +47,7 @@ bool GameState::hasWon(int player) const{
 
     //Vertical check 
     for (int col = 0; col < numCols; ++col){
-        for (int row = 0; row <= numRows; ++row){
+        for (int row = 0; row <= numRows - 4; ++row){
             if (board[row][col] == player 
             && board[row + 1][col] == player &&
             board[row + 2][col] == player &&
@@ -81,9 +87,9 @@ bool GameState::hasWon(int player) const{
 
 
 bool GameState::play(int col){
-    cout << "Current player makes move " << col << endl;
-    cout << "Must update state, including whose turn it is" << endl; 
-    cout << "and the last move, among other things." << endl;
+    // cout << "Current player makes move " << col << endl;
+    // cout << "Must update state, including whose turn it is" << endl; 
+    // cout << "and the last move, among other things." << endl;
 
     if( col<0 || col >= numCols){
         return false;
@@ -94,6 +100,7 @@ bool GameState::play(int col){
             board[row][col] = currentTurn;
             lastMove.set(row, col);
             currentTurn = !currentTurn;
+            elapsedTurns += 1;
             return true;
         }
     }
@@ -103,19 +110,19 @@ bool GameState::play(int col){
 
 
 int GameState::getCurrentTurn() const {
-    cout <<"Whose turn is it?" <<endl;
+    // cout <<"Whose turn is it?" <<endl;
     return 0;
  }
 
 
  bool GameState::gameOver() const {
-    cout << "Checking if the game is over" << endl;
-  if(hasWon(0) || hasWon(1)){
-    return true;
-   }
+    // cout << "Checking if the game is over" << endl;
+    if(hasWon(0) || hasWon(1)){
+        return true;
+    }
 
    
-   return true;
+   return false;
  }
 
  int GameState::getSize() const {
@@ -126,47 +133,73 @@ int GameState::getCurrentTurn() const {
     return Vec(numRows, numCols);
  }
 
-// string GameState::squareState(int i, int j) const {
-//     if (grid[i][j] == 0){
-//         return "X";
-//     }
-//     else if (grid[i][j] == 1){
-//         return "O";
-//     }
-    
-//     return "";
-// }
+bool GameState::hasSpace(int col) const {
+    return board[0][col] == -1;
+}
 
-// Vec GameState::getLastMove() const {
-//     return lastMove;
-// }
+std::string GameState::squareState(int row, int col) const {
+    if (board[row][col] == -1) {
+        return "";
+    } else if (board[row][col] == 0) {
+        return "red";
+    } else {
+        return "yellow";
+    }
+}
+char GameState::squareStateChar(int row, int col) const {
+    if (board[row][col] == -1) {
+        return ' ';
+    } else if (board[row][col] == 0) {
+        return 'X';
+    } else {
+        return 'O';
+    }
+}
+
+Vec GameState::getLastMove() const {
+    return lastMove;
+}
+
+int GameState::getElapsedTurns() const {
+    return elapsedTurns;
+}
 
 
-// void GameState::reset(){
-//     currentTurn = 0;
-//     turnCount = 0;
-//     done = false;
+void GameState::reset(){
+    /*
+    currentTurn = 0;
+    turnCount = 0;
+    done = false;
 
-//     lastMove.set(-1, -1);
+    lastMove.set(-1, -1);
 
-//     for (int i = 0; i < size; i++){
-//         for (int j = 0; j < size; j++){
-//             grid[i][j] = -1;
-//         }
-//     }
-// }
+    for (int i = 0; i < size; i++){
+        for (int j = 0; j < size; j++){
+            grid[i][j] = -1;
+        }
+    }
+    */
+}
 
-// void GameState::enableAI(){
-//     enabledAI = true;
-// }
+void GameState::enableAI(){
+    enabledAI = true;
+}
 
-// void GameState::disableAI(){
-//     enabledAI = false;
-// }
+void GameState::disableAI(){
+    enabledAI = false;
+}
 
-// bool GameState::getEnabledAI() const{
-//     return enabledAI;
-// }
+bool GameState::getEnabledAI() const{
+     return enabledAI;
+}
+
+int GameState::getCols() const {
+    return numCols;
+}
+
+int GameState::getRows() const {
+    return numRows;
+}
 
 // GameState::~GameState(){
 //     for (int i = 0; i < size; i++){

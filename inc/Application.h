@@ -13,6 +13,7 @@
 #include "SettingsInterface.h"
 
 class Application: public bobcat::Application_ {
+    /*
     bobcat::Window *window;
     
     bobcat::Menu *menu;
@@ -33,9 +34,12 @@ class Application: public bobcat::Application_ {
     void handleCancelBtnClick(bobcat::Widget *sender);
     void handleApplyBtnClick(bobcat::Widget *sender);
     void handleQuitMenuClick(bobcat::Widget *sender);
+    */
+    GameState state;
 
 public:
     Application();
+    void runTUI(int rows, int cols);
 };
 
 #endif

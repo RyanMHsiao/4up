@@ -27,10 +27,10 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
 }
 
 void GameInterface::handleClick(Widget *sender){
-    for (int i = 0; i < state.getSize(); i++){
-        for (int j = 0; j < state.getSize(); j++){
+    for (int i = 0; i < state.getRows(); i++){
+        for (int j = 0; j < state.getCols(); j++){
             if (sender == buttons[i][j]){
-                state.play(i); 
+                state.play(j);
                 updateButtons();
 
                 bool done = checkWinningConditions();
@@ -88,11 +88,12 @@ void GameInterface::initButtons(){
 }
 
 void GameInterface::showButtons(){
-    int btnW = w / state.getSize();
-    int btnH = h / state.getSize();
-    for (int i = 0; i < state.getSize(); i++){
+
+    int btnW = w / state.getCols();
+    int btnH = h / state.getRows();
+    for (int i = 0; i < state.getRows(); i++){
         int btnY = y + btnH * i;
-        for (int j = 0; j < state.getSize(); j++){
+        for (int j = 0; j < state.getCols(); j++){
             int btnX = x + btnW * j;
 
             buttons[i][j]->resize(btnX, btnY, btnW, btnH);
@@ -103,17 +104,18 @@ void GameInterface::showButtons(){
 }
 
 void GameInterface::hideButtons(){
-    for (int i = 0; i < state.getSize(); i++){
-        for (int j = 0; j < state.getSize(); j++){
+
+    for (int i = 0; i < state.getRows(); i++){
+        for (int j = 0; j < state.getCols(); j++){
             buttons[i][j]->hide();
         }
     }
 }
 
 void GameInterface::updateButtons(){
-    for (int i = 0; i < state.getSize(); i++){
-        for (int j = 0; j < state.getSize(); j++){
-            // buttons[i][j]->label(state.squareState(i, j));
+    for (int i = 0; i < state.getRows(); i++){
+        for (int j = 0; j < state.getCols(); j++){
+            buttons[i][j]->label(state.squareState(i, j));
         }
     }
 }

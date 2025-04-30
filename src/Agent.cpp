@@ -3,6 +3,7 @@
 #include "Graph.h"
 #include <iostream>
 #include <Agent.h>
+#include "GameState.h"
 
 using namespace std;
 
@@ -17,11 +18,10 @@ struct GameTreeNode{
 };
 
 Vec findFirstAvailable(GameState state){
-    for (int i = 0; i < state.gridSize(); i++){
-        for (int j = 0; j < state.gridSize(); j++){
-            if (state.squareState(i, j) == ""){
-                return Vec(i, j);
-            }
+
+    for (int j = 0; j < state.getCols(); j++){
+        if (state.hasSpace(j)){
+            return Vec(0, j);
         }
     }
 
@@ -31,11 +31,9 @@ Vec findFirstAvailable(GameState state){
 ArrayList<Vec> openSquares(GameState state){
     ArrayList<Vec> result;
     if (!state.gameOver()){
-        for (int i = 0; i < state.gridSize(); i++){
-            for (int j = 0; j < state.gridSize(); j++){
-                if (state.squareState(i, j) == ""){
-                    result.append(Vec(i,j));
-                }
+        for (int j = 0; j < state.getCols(); j++){
+            if (state.hasSpace(j)){
+                result.append(Vec(0,j));
             }
         }
     }
@@ -48,18 +46,17 @@ int Agent::getReward(Vertex<GameState>* start, int player){
 
     // If it is a terminal state, evaluate it directly
     if (start->neighbors.size() == 0){
-        // If we won, maximum reward
-        if (start->data.hasWon(player)){
-            return 100;
-        }
-        // if we lost maximum penalty
-        else if (start->data.hasWon(!player)){
-            return -100;
-        }
-        // otherwise somewhere in-between
-        else{
-            return 50;
-        }
+            if (start->data.hasWon(player)){
+                return 100;
+            }
+            else if (start->data.hasWon(!player)){
+                return -100;
+            }
+            return 0;
+    }
+
+    if(start->data.hasWon(!player)){
+        return -100;
     }
     // If it is not a terminal state (it has children),
     // we evaluate each child and pick the maximum or the minimum child
@@ -91,25 +88,20 @@ Vec Agent::play(GameState state){
     Queue<GameTreeNode> frontier;
     frontier.enqueue(GameTreeNode(root, 0));
 
-    int limit = 3;
+    int limit = 5;
     while (!frontier.isEmpty()){
         GameTreeNode gtn = frontier.dequeue();
         Vertex<GameState>* node = gtn.vertex;
         int depth = gtn.depth;
         ArrayList<Vec> moves = openSquares(node->data);
 
-        if (state.gridSize() == 3){
-            limit = 6;
-        }
-        else{
-            if (moves.size() < 15){
-                limit = 5;
-            }
-        }
+        // if (moves.size() < 15){
+        //     limit = 5;
+        // }
         if (depth < limit){
             for (int i = 0; i < moves.size(); i++){
                 GameState currentState = node->data;
-                currentState.play(moves[i].x, moves[i].y);
+                currentState.play(moves[i].y);
                 Vertex<GameState>* child = new Vertex<GameState>(currentState);
                 gameSpace.addVertex(child);
                 gameSpace.addDirectedEdge(node, child, 1);
@@ -117,7 +109,7 @@ Vec Agent::play(GameState state){
             }
         }
     }
-
+    
     int reward = getReward(root->neighbors[0]->location, 1);
     int pos = 0;
     for (int i = 1; i < root->neighbors.size(); i++){
@@ -130,6 +122,10 @@ Vec Agent::play(GameState state){
             reward = curr;
             pos = i;
         }
+    }
+
+    if(reward == -100){
+        std::cout << "Always lose from here" << std::endl;
     }
 
     return root->neighbors[pos]->location->data.getLastMove();
