@@ -3,6 +3,7 @@
 #include <bobcat_ui/bobcat_ui.h>
 #include <bobcat_ui/button.h>
 #include <cstdlib>
+#include "Agent.h"
 
 using namespace bobcat;
 using namespace std;
@@ -38,6 +39,37 @@ Application::Application(){
     ON_CLICK(applyButton, Application::handleApplyBtnClick);
 
     window->show();
+}
+
+void Application::runTUI(int rows, int cols) {
+    state = GameState(rows, cols);
+    bool artificial = true;
+    bool artificialPlay = false;
+    // agent = Agent();
+
+    while (!state.gameOver()) {
+        if(artificialPlay && artificial){
+            Vec spot = Agent::play(state);
+            state.play(spot.y);
+            artificialPlay = false;
+        } else {
+            bool valid = false;
+            while(!valid){
+                std::cout << state << "\n";
+                int choice;
+                std::cin >> choice;
+                if(state.hasSpace(choice)){
+                    state.play(choice);
+                    valid = true;
+                } else {
+                    std::cout << "Invalid Move" << std::endl;
+                }
+            }
+            artificialPlay = true;
+        }
+    }
+    std::cout << state << "\n";
+    std::cout << "game over\n";
 }
 
 void Application::handleNewGameMenuClick(Widget *sender){

@@ -37,6 +37,7 @@ class GameState{
     bool enabledAI;
     Vec lastMove;
     bool done;
+    int elapsedTurns;
     
 public:
 //Initialize default game state
@@ -55,6 +56,8 @@ public:
 
     bool play(int col); //play into a column, update state resulting from players move
 
+
+    
     bool hasWon(int player) const; //has a player won?
 
     bool gameOver() const; //is the game over?
@@ -71,8 +74,7 @@ public:
     //if all columns are occupied and no player has won, we have a tie
     bool isFull() const; 
 
-    
-
+    bool hasSpace(int col) const;
 
     Vec getLastMove() const; //get the last move (row, col)
 
@@ -80,12 +82,25 @@ public:
 
     Vec getBoardDimensions() const;
 
+    std::string squareState(int row, int col) const;
+
+    char squareStateChar(int row, int col) const;
+
+    int getElapsedTurns() const;
+
 
     friend std::ostream& operator<<(std::ostream& os, const GameState& state);
 };
 
 inline std::ostream& operator<<(std::ostream& os, const GameState& state){
     os << "Printing the game state";
+
+    for (int y = 0; y < state.getRows(); ++y) {
+        for (int x = 0; x < state.getCols(); ++x) {
+            os << state.squareStateChar(y, x);
+        }
+        os << "\n";
+    }
 
     return os;
 }
