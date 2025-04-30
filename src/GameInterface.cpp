@@ -1,3 +1,4 @@
+#include <FL/Enumerations.H>
 #include <FL/Fl_Window.H>
 #include <GameInterface.h>
 #include <Agent.h>
@@ -30,7 +31,7 @@ void GameInterface::handleClick(Widget *sender){
     for (int i = 0; i < state.getRows(); i++){
         for (int j = 0; j < state.getCols(); j++){
             if (sender == buttons[i][j]){
-                state.play(j);
+                state.play(i);
                 updateButtons();
 
                 bool done = checkWinningConditions();
@@ -114,9 +115,16 @@ void GameInterface::hideButtons(){
 
 void GameInterface::updateButtons(){
     for (int i = 0; i < state.getRows(); i++){
-        for (int j = 0; j < state.getCols(); j++){
-            buttons[i][j]->label(state.squareState(i, j));
+        if (state.buttonState(i, state.getCols() == 0)){
+            //Make it red
+            cout << "button " << i << "is red" << endl;
+            buttons[i][state.getCols()]->color(fl_rgb_color(255, 0, 0));
+            buttons[i][state.getCols()]->color2(fl_rgb_color(255, 0, 0));
         }
+
+//         for (int j = 0; j < state.getCols(); j++){
+//             buttons[i][j]->label(state.squareState(i, j));
+//         }
     }
 }
 
