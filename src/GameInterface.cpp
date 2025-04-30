@@ -22,15 +22,15 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
 
     statusBar = new TextBox(0, 375, 400, 25, message);
 
-    initButtons();
+    initButtons(); 
     showButtons();
 }
 
 void GameInterface::handleClick(Widget *sender){
-    for (int i = 0; i < state.gridSize(); i++){
-        for (int j = 0; j < state.gridSize(); j++){
+    for (int i = 0; i < state.getSize(); i++){
+        for (int j = 0; j < state.getSize(); j++){
             if (sender == buttons[i][j]){
-                state.play(i, j);
+                state.play(i); 
                 updateButtons();
 
                 bool done = checkWinningConditions();
@@ -38,7 +38,7 @@ void GameInterface::handleClick(Widget *sender){
                 if (!done){
                     if (state.getEnabledAI()){
                         Vec move = Agent::play(state);
-                        state.play(move.x, move.y);
+                        state.play(move.x);
                         updateButtons();
                         checkWinningConditions();
                     }
@@ -88,32 +88,32 @@ void GameInterface::initButtons(){
 }
 
 void GameInterface::showButtons(){
-    int btnW = w / state.gridSize();
-    int btnH = h / state.gridSize();
-    for (int i = 0; i < state.gridSize(); i++){
+    int btnW = w / state.getSize();
+    int btnH = h / state.getSize();
+    for (int i = 0; i < state.getSize(); i++){
         int btnY = y + btnH * i;
-        for (int j = 0; j < state.gridSize(); j++){
+        for (int j = 0; j < state.getSize(); j++){
             int btnX = x + btnW * j;
 
             buttons[i][j]->resize(btnX, btnY, btnW, btnH);
-            buttons[i][j]->label(state.squareState(i, j));
+            // buttons[i][j]->label(state.squareState(i, j));
             buttons[i][j]->show();
         }
     }
 }
 
 void GameInterface::hideButtons(){
-    for (int i = 0; i < state.gridSize(); i++){
-        for (int j = 0; j < state.gridSize(); j++){
+    for (int i = 0; i < state.getSize(); i++){
+        for (int j = 0; j < state.getSize(); j++){
             buttons[i][j]->hide();
         }
     }
 }
 
 void GameInterface::updateButtons(){
-    for (int i = 0; i < state.gridSize(); i++){
-        for (int j = 0; j < state.gridSize(); j++){
-            buttons[i][j]->label(state.squareState(i, j));
+    for (int i = 0; i < state.getSize(); i++){
+        for (int j = 0; j < state.getSize(); j++){
+            // buttons[i][j]->label(state.squareState(i, j));
         }
     }
 }
