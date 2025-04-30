@@ -41,7 +41,7 @@ bool GameState::hasWon(int player) const{
 
     //Vertical check 
     for (int col = 0; col < numCols; ++col){
-        for (int row = 0; row <= numRows; ++row){
+        for (int row = 0; row <= numRows - 4; ++row){
             if (board[row][col] == player 
             && board[row + 1][col] == player &&
             board[row + 2][col] == player &&
@@ -104,14 +104,24 @@ bool GameState::play(int col){
 
 int GameState::getCurrentTurn() const {
     cout <<"Whose turn is it?" <<endl;
-    return 0;
+    return currentTurn;
+ }
+
+//tells if no more moves can be made (helps detect a draw)
+ bool GameState::isFull() const{
+    for (int col = 0; col < numCols; ++col){
+        if (board[0][col]== -1){
+            return false;
+        }
+    }
+    return true;
  }
 
 
  bool GameState::gameOver() const {
     cout << "Checking if the game is over" << endl;
   if(hasWon(0) || hasWon(1)){
-    return true;
+    return hasWon(0) || hasWon(1) || isFull();
    }
 
    
