@@ -19,12 +19,18 @@ GameState::GameState(int numRows, int numCols){
         }
         board.append(row); //append the completed row to the board
     }
-    cout<<"Initializing Connect 4 state with size"<< numRows <<"x"<<numCols <<endl;
+    // cout<<"Initializing Connect 4 state with size"<< numRows <<"x"<<numCols <<endl;
 }
+
+//For the agent, used to see if the person being checked is one off from winning
+// bool GameState::closeToWin(int player) const{
+
+// }
+
 
 //check if a player has won
 bool GameState::hasWon(int player) const{
-    cout <<"Checking whether player " <<player << " has won" <<endl;
+    // cout <<"Checking whether player " <<player << " has won" <<endl;
 
     //horizontal check
 
@@ -81,9 +87,9 @@ bool GameState::hasWon(int player) const{
 
 
 bool GameState::play(int col){
-    cout << "Current player makes move " << col << endl;
-    cout << "Must update state, including whose turn it is" << endl; 
-    cout << "and the last move, among other things." << endl;
+    // cout << "Current player makes move " << col << endl;
+    // cout << "Must update state, including whose turn it is" << endl; 
+    // cout << "and the last move, among other things." << endl;
 
     if( col<0 || col >= numCols){
         return false;
@@ -104,13 +110,13 @@ bool GameState::play(int col){
 
 
 int GameState::getCurrentTurn() const {
-    cout <<"Whose turn is it?" <<endl;
+    // cout <<"Whose turn is it?" <<endl;
     return 0;
  }
 
 
  bool GameState::gameOver() const {
-    cout << "Checking if the game is over" << endl;
+    // cout << "Checking if the game is over" << endl;
     if(hasWon(0) || hasWon(1)){
         return true;
     }
