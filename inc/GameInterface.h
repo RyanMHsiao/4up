@@ -1,13 +1,13 @@
 #ifndef GAME_INTERFACE_H
 #define GAME_INTERFACE_H
 
+#include "ArrayList.h"
 #include <bobcat_ui/bobcat_ui.h>
 #include <bobcat_ui/button.h>
 #include <bobcat_ui/textbox.h>
 
-#include <ArrayList.h>
 #include <GameState.h>
-#include <string>
+
 
 class GameInterface{
     int x;
@@ -17,18 +17,16 @@ class GameInterface{
 
     GameState state;
 
+    ArrayList<bobcat::Button*> buttons;
+
     bobcat::TextBox *statusBar;
 
-    ArrayList<ArrayList<bobcat::Button*>> buttons;
+    void updateButtons();
 
     void handleClick(bobcat::Widget *sender);
 
-    void initButtons();
-    void updateButtons();
-    void showButtons();
     void hideButtons();
-
-    bool checkWinningConditions();
+    void showButtons();
 
 public:
 
