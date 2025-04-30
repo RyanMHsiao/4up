@@ -88,7 +88,7 @@ Vec Agent::play(GameState state){
     Queue<GameTreeNode> frontier;
     frontier.enqueue(GameTreeNode(root, 0));
 
-    int limit = 3;
+    int limit = 5;
     while (!frontier.isEmpty()){
         GameTreeNode gtn = frontier.dequeue();
         Vertex<GameState>* node = gtn.vertex;
@@ -122,6 +122,10 @@ Vec Agent::play(GameState state){
             reward = curr;
             pos = i;
         }
+    }
+
+    if(reward == -100){
+        std::cout << "Always lose from here" << std::endl;
     }
 
     return root->neighbors[pos]->location->data.getLastMove();
