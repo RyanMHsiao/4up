@@ -52,9 +52,11 @@ int Agent::getReward(Vertex<GameState>* start, int player){
             else if (start->data.hasWon(!player)){
                 return -100;
             }
-            else{
-                return 50;
-            }
+            return 0;
+    }
+
+    if(start->data.hasWon(!player)){
+        return -100;
     }
     // If it is not a terminal state (it has children),
     // we evaluate each child and pick the maximum or the minimum child
@@ -86,7 +88,7 @@ Vec Agent::play(GameState state){
     Queue<GameTreeNode> frontier;
     frontier.enqueue(GameTreeNode(root, 0));
 
-    int limit = 7;
+    int limit = 3;
     while (!frontier.isEmpty()){
         GameTreeNode gtn = frontier.dequeue();
         Vertex<GameState>* node = gtn.vertex;
