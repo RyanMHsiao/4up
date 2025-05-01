@@ -13,7 +13,7 @@ Things to do:
 */
 
 class Agent {
-    static int getReward(Vertex<GameState>* start, int player);
+    static int getReward(Vertex<GameState>* start, int player, int cycles);
 public:
     static Vec play(GameState state);
 };

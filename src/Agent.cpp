@@ -40,7 +40,7 @@ ArrayList<Vec> openSquares(GameState state){
     return result;
 }
 
-int Agent::getReward(Vertex<GameState>* start, int player){
+int Agent::getReward(Vertex<GameState>* start, int player, int cycles){
     // Evaluate a particular vertex in the state space
     // from the point of view of player
     // std::cout << start->neighbors.size() << std::endl;
@@ -50,11 +50,11 @@ int Agent::getReward(Vertex<GameState>* start, int player){
         if (start->neighbors.size() == i){
             // std::cout << start->neighbors.size() << std::endl;
                 if (start->data.hasWon(player)){
-                    return 100 * i + 100;
+                    return 100 * cycles + 100;
                 }
                 else if (start->data.hasWon(!player)){
                     // std::cout << -100 + (-100 * i) << std::endl;
-                    return (-100 + (-100 * i));
+                    return (-100 + (-100 * cycles));
                 }
                 
         }
@@ -68,9 +68,10 @@ int Agent::getReward(Vertex<GameState>* start, int player){
     // we evaluate each child and pick the maximum or the minimum child
     // depending on whose turn it is
     else{
-        int reward = getReward(start->neighbors[0]->location, player);
+        cycles--;
+        int reward = getReward(start->neighbors[0]->location, player, cycles);
         for (int i = 1; i < start->neighbors.size(); i++){
-            int curr = getReward(start->neighbors[i]->location, player);
+            int curr = getReward(start->neighbors[i]->location, player, cycles);
             if (start->data.getCurrentTurn() == player){
                 if (curr > reward){
                     reward = curr;
@@ -94,7 +95,7 @@ Vec Agent::play(GameState state){
     Queue<GameTreeNode> frontier;
     frontier.enqueue(GameTreeNode(root, 0));
     int depthStore = 0;
-    int limit = 5;
+    int limit = 7;
     while (!frontier.isEmpty()){
         GameTreeNode gtn = frontier.dequeue();
         Vertex<GameState>* node = gtn.vertex;
@@ -117,11 +118,12 @@ Vec Agent::play(GameState state){
         }
     }
     
-    int reward = getReward(root->neighbors[0]->location, 1);
+    int cycles = limit;
+    int reward = getReward(root->neighbors[0]->location, 1, cycles);
     std::cout << reward << std::endl;
     int pos = 0;
     for (int i = 1; i < root->neighbors.size(); i++){
-        int curr = getReward(root->neighbors[i]->location, 1);
+        int curr = getReward(root->neighbors[i]->location, 1, cycles);
         std::cout << curr << std::endl;
         if (curr > reward){
             std::cout << "better option at " << i << std::endl;
