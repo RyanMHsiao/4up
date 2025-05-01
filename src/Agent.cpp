@@ -45,24 +45,19 @@ int Agent::getReward(Vertex<GameState>* start, int player, int cycles){
     // from the point of view of player
     // std::cout << start->neighbors.size() << std::endl;
     // If it is a terminal state, evaluate it directly
-    for(int i = 5; i >= 0; i --){
+   
         // std::cout << start->neighbors.size() << " and " << i << std::endl;
-        if (start->neighbors.size() == i){
-            // std::cout << start->neighbors.size() << std::endl;
-                if (start->data.hasWon(player)){
-                    return 100 * cycles + 100;
-                }
-                else if (start->data.hasWon(!player)){
-                    // std::cout << -100 + (-100 * i) << std::endl;
-                    return (-100 + (-100 * cycles));
-                }
-                
-        }
-
+        
+    if (start->data.hasWon(player)){
+        return 100 * cycles + 100;
+    }
+    else if (start->data.hasWon(!player)){
+        // std::cout << -100 + (-100 * i) << std::endl;
+        return (-100 * cycles);
     }
 
     if(start->neighbors.size() == 0){
-        return 50;
+        return 50 * cycles + 1;
     }
     // If it is not a terminal state (it has children),
     // we evaluate each child and pick the maximum or the minimum child
@@ -94,8 +89,7 @@ Vec Agent::play(GameState state){
 
     Queue<GameTreeNode> frontier;
     frontier.enqueue(GameTreeNode(root, 0));
-    int depthStore = 0;
-    int limit = 7;
+    int limit = 5;
     while (!frontier.isEmpty()){
         GameTreeNode gtn = frontier.dequeue();
         Vertex<GameState>* node = gtn.vertex;
@@ -113,7 +107,7 @@ Vec Agent::play(GameState state){
                 gameSpace.addVertex(child);
                 gameSpace.addDirectedEdge(node, child, 1);
                 frontier.enqueue(GameTreeNode(child, depth + 1));
-                depthStore = depth;
+                
             }
         }
     }
