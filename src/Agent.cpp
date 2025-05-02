@@ -151,9 +151,24 @@ Vec Agent::play(GameState state){
         //This is to see if there is multiple win scenarios for human, and will try blocking one of them at least to be less stupid
         int possibleWins = 0;
         std::cout << "size: " << root->neighbors.size() << std::endl;
+        // Vertex<GameState>* root2 = new Vertex<GameState>(state);
+        // root2.play(0);
 
-        for(int count = 0; count < root->neighbors.size(); count++){
+        for(int count = 0; count < state.getCols(); count++){
             //This will be where I cycle through possible win spots for human when 2 ways to win, such that it will block at least one spot
+            GameState root2 = GameState(state);
+            
+            // Note that using count instead of an actual col value
+            if(root2.hasSpace(count)){
+                root2.forceOpponentSimulation(count);
+                if(root2.hasWon(1) ||  root2.hasWon(0) && root2.hasSpace(count)){
+                    possibleWins++;
+                    std::cout << "Poss" << std::endl;
+                    pos = count;
+                }
+
+            }
+
         }
 
         std::cout << "Possible wins: " << possibleWins << std::endl;

@@ -238,3 +238,8 @@ int GameState::getCols() const {
 int GameState::getRows() const {
     return numRows;
 }
+
+void GameState::forceOpponentSimulation(int col) {
+    currentTurn = !currentTurn;
+    play(col);
+}

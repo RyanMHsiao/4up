@@ -56,7 +56,6 @@ public:
 
     bool play(int col); //play into a column, update state resulting from players move
 
-
     
     bool hasWon(int player) const; //has a player won?
 
@@ -88,6 +87,8 @@ public:
 
     int getElapsedTurns() const;
 
+    // Messes up the state. Do not use this outside of agent.
+    void forceOpponentSimulation(int col);
 
     friend std::ostream& operator<<(std::ostream& os, const GameState& state);
 };
