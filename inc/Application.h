@@ -20,6 +20,9 @@ class Application: public bobcat::Application_ {
     bobcat::MenuItem *newGame;
     bobcat::MenuItem *settings;
     bobcat::MenuItem *quit;
+
+    bobcat::Button *playersButton;
+    bobcat::Button *AIButton;
     
     bobcat::Button *applyButton;
     bobcat::Button *cancelButton;
