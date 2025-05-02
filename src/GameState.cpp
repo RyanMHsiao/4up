@@ -227,41 +227,8 @@ char GameState::squareStateChar(int row, int col) const {
     }
 }
 
-Vec GameState::getLastMove() const {
-    return lastMove;
-}
-
 int GameState::getElapsedTurns() const {
     return elapsedTurns;
-}
-
-
-void GameState::reset(){
-    /*
-    currentTurn = 0;
-    turnCount = 0;
-    done = false;
-
-    lastMove.set(-1, -1);
-
-    for (int i = 0; i < size; i++){
-        for (int j = 0; j < size; j++){
-            grid[i][j] = -1;
-        }
-    }
-    */
-}
-
-void GameState::enableAI(){
-    enabledAI = true;
-}
-
-void GameState::disableAI(){
-    enabledAI = false;
-}
-
-bool GameState::getEnabledAI() const{
-     return enabledAI;
 }
 
 int GameState::getCols() const {
