@@ -3,13 +3,14 @@
 #include <bobcat_ui/bobcat_ui.h>
 #include <bobcat_ui/button.h>
 #include <cstdlib>
+#include <type_traits>
 #include "Agent.h"
 
 using namespace bobcat;
 using namespace std;
 
 Application::Application(){
-    /*
+    
     window = new Window(100, 100, 400, 400, "Connect4");
 
     state = GameState();
@@ -40,7 +41,7 @@ Application::Application(){
     ON_CLICK(applyButton, Application::handleApplyBtnClick);
 
     window->show();
-    */
+    
 }
 
 void Application::runTUI(int rows, int cols) {
@@ -74,7 +75,8 @@ void Application::runTUI(int rows, int cols) {
     std::cout << "game over\n";
 }
 
-/*
+
+
 void Application::handleNewGameMenuClick(Widget *sender){
     gameInterface->reset();
 }
@@ -110,4 +112,3 @@ void Application::handleApplyBtnClick(Widget* sender){
 void Application::handleQuitMenuClick(Widget *sender){
     exit(0);
 }
-*/

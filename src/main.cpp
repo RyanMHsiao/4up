@@ -10,9 +10,9 @@ int main(){
     // So we instead just use our own functions for this phase of testing
     Application app;
 
-    app.runTUI(6, 7);
+    // app.runTUI(6, 7);
 
-    // return app.run();
+    return app.run();
 
     
 
