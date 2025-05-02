@@ -21,7 +21,7 @@ class Application: public bobcat::Application_ {
     bobcat::MenuItem *settings;
     bobcat::MenuItem *quit;
 
-    bobcat::Button *playersButton;
+    bobcat::Button *twoPlayersButton;
     bobcat::Button *AIButton;
     
     bobcat::Button *applyButton;
@@ -37,6 +37,8 @@ class Application: public bobcat::Application_ {
     void handleCancelBtnClick(bobcat::Widget *sender);
     void handleApplyBtnClick(bobcat::Widget *sender);
     void handleQuitMenuClick(bobcat::Widget *sender);
+    void handleTwoPlayersClick(bobcat::Widget *sender);
+    void handleAIClick(bobcat::Widget *sender);
     
     // GameState state;
 

@@ -42,6 +42,14 @@ Application::Application(){
 
     window->show();
     
+    twoPlayersButton = new Button(30, 35, 155, 25, "Player vs Player");
+    AIButton = new Button(215, 35, 155, 25, "Player vs AI");
+
+    ON_CLICK(twoPlayersButton, Application::handleTwoPlayersClick);
+    ON_CLICK(AIButton, Application::handleAIClick);
+
+    twoPlayersButton->show();
+    AIButton->show();
 }
 
 void Application::runTUI(int rows, int cols) {
