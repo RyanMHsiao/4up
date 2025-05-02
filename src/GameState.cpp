@@ -288,9 +288,6 @@ std::string GameState::squareState(int row, int col) const {
         return "empty";
     }
     return(board[row][col] == 0) ? "red" : "yellow";    
-
-int GameState::getCols() const {
-    return numCols;
 }
 
 char GameState::squareStateChar(int row, int col) const {
