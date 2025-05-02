@@ -40,7 +40,7 @@ ArrayList<Vec> openSquares(GameState state){
     return result;
 }
 
-int Agent::getReward(Vertex<GameState>* start, int player, int cycles, int scoreTotal){
+int Agent::getReward(Vertex<GameState>* start, int player, int cycles){
     // Evaluate a particular vertex in the state space
     // from the point of view of player
     // std::cout << start->neighbors.size() << std::endl;
@@ -73,9 +73,9 @@ int Agent::getReward(Vertex<GameState>* start, int player, int cycles, int score
     // depending on whose turn it is
     else{
         cycles--;
-        int reward = getReward(start->neighbors[0]->location, player, cycles, scoreTotal);
+        int reward = getReward(start->neighbors[0]->location, player, cycles);
         for (int i = 1; i < start->neighbors.size(); i++){
-            int curr = getReward(start->neighbors[i]->location, player, cycles, scoreTotal);
+            int curr = getReward(start->neighbors[i]->location, player, cycles);
             if (start->data.getCurrentTurn() == player){
                 if (curr > reward){
                     reward = curr;
@@ -122,12 +122,12 @@ Vec Agent::play(GameState state){
     }
     
     int cycles = limit;
-    int reward = getReward(root->neighbors[0]->location, 1, cycles, 0);
+    int reward = getReward(root->neighbors[0]->location, 1, cycles);
 
     std::cout << reward << std::endl;
     int pos = 0;
     for (int i = 1; i < root->neighbors.size(); i++){
-        int curr = getReward(root->neighbors[i]->location, 1, cycles, 0);
+        int curr = getReward(root->neighbors[i]->location, 1, cycles);
         std::cout << curr << std::endl;
         if (curr > reward){
             std::cout << "better option at " << i << std::endl;
