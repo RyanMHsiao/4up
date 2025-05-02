@@ -125,6 +125,16 @@ for(int i = 0; i < state.getRows(); i++){
             buttons[i][j]->color(fl_rgb_color(255, 0, 0));
             buttons[i][j]->color2(fl_rgb_color(255, 0, 0));
         }
+
+        else if (stateStr == "yellow"){
+            buttons[i][j]->color(fl_rgb_color(255, 0, 0));
+            buttons[i][j]->color2(fl_rgb_color(255, 255, 0));
+        }
+        else {
+            buttons[i][j]->color(fl_rgb_color(250, 250, 250));
+            buttons[i][j]->color2(fl_rgb_color(250, 250, 250));
+        }
+        
         
     }
 
