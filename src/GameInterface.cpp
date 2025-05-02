@@ -81,13 +81,6 @@ void GameInterface::initButtons(){
         }
         buttons.append(row);
     }
-
-    // for (int i = 0; i < buttons.size(); i++){
-    //     for (int j = 0; j < buttons[i].size(); j++){
-    //         buttons[i][j]->labelsize(32);
-    //         ON_CLICK(buttons[i][j], GameInterface::handleClick);
-    //     }
-    // }
 }
 
 void GameInterface::showButtons(){
