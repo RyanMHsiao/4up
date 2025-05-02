@@ -73,9 +73,9 @@ int Agent::getReward(Vertex<GameState>* start, int player, int cycles, int score
     // depending on whose turn it is
     else{
         cycles--;
-        int reward = getReward(start->neighbors[0]->location, player, cycles, 0);
+        int reward = getReward(start->neighbors[0]->location, player, cycles, scoreTotal);
         for (int i = 1; i < start->neighbors.size(); i++){
-            int curr = getReward(start->neighbors[i]->location, player, cycles, 0);
+            int curr = getReward(start->neighbors[i]->location, player, cycles, scoreTotal);
             if (start->data.getCurrentTurn() == player){
                 if (curr > reward){
                     reward = curr;
