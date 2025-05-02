@@ -54,12 +54,12 @@ void GameInterface::handleClick(Widget *sender){
 
 bool GameInterface::checkWinningConditions(){
     bool result = state.gameOver();
-    if (state.gameOver()){
+    if (result){
         if (state.hasWon(0)){
-            showMessage("Player X has won.\nClick Close to start a new game.", "Game Over");
+            showMessage("Player 1 has won.\nClick Close to start a new game.", "Game Over");
         }
         else if (state.hasWon(1)){
-            showMessage("Player O has won.\nClick Close to start a new game.", "Game Over");
+            showMessage("Player 2 has won.\nClick Close to start a new game.", "Game Over");
         }
         else{
             showMessage("It is a tie.\nClick Close to start a new game.", "Game Over");
