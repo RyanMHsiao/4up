@@ -48,6 +48,7 @@ int Agent::getReward(Vertex<GameState>* start, int player, int cycles){
    
         // std::cout << start->neighbors.size() << " and " << i << std::endl;
     if(start->neighbors.size() == 0){
+        
         if (start->data.hasWon(player)){
             return 100 * cycles + 100;
         }
@@ -57,7 +58,7 @@ int Agent::getReward(Vertex<GameState>* start, int player, int cycles){
             return (-100 * cycles);
         }
 
-        if(cycles == 2){
+        if(cycles == 0){
             return 50 * cycles + 1;
         }
 
@@ -145,9 +146,10 @@ Vec Agent::play(GameState state){
     if(reward == -100 * (limit - 1)){
         //This is to see if there is multiple win scenarios for human, and will try blocking one of them at least to be less stupid
         int possibleWins = 0;
+        std::cout << "size: " << root->neighbors.size() << std::endl;
 
         for(int count = 0; count < root->neighbors.size(); count++){
-            
+            //This will be where I cycle through possible win spots for human when 2 ways to win, such that it will block at least one spot
         }
 
         std::cout << "Possible wins: " << possibleWins << std::endl;
