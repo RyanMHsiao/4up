@@ -40,13 +40,17 @@ ArrayList<Vec> openSquares(GameState state){
     return result;
 }
 
-int Agent::getReward(Vertex<GameState>* start, int player, int cycles){
+int Agent::getReward(Vertex<GameState>* start, int player, int cycles, int scoreTotal){
     // Evaluate a particular vertex in the state space
     // from the point of view of player
     // std::cout << start->neighbors.size() << std::endl;
     // If it is a terminal state, evaluate it directly
-   
+    // if(!start->data.hasWon(!player)){
+
+    // }
         // std::cout << start->neighbors.size() << " and " << i << std::endl;
+    //Try looping while adding score, such that you can add when a three in a row occurs, and have the AI try to create those if its theirs, or block if by human.
+
     if(start->neighbors.size() == 0){
         
         if (start->data.hasWon(player)){
@@ -69,9 +73,9 @@ int Agent::getReward(Vertex<GameState>* start, int player, int cycles){
     // depending on whose turn it is
     else{
         cycles--;
-        int reward = getReward(start->neighbors[0]->location, player, cycles);
+        int reward = getReward(start->neighbors[0]->location, player, cycles, 0);
         for (int i = 1; i < start->neighbors.size(); i++){
-            int curr = getReward(start->neighbors[i]->location, player, cycles);
+            int curr = getReward(start->neighbors[i]->location, player, cycles, 0);
             if (start->data.getCurrentTurn() == player){
                 if (curr > reward){
                     reward = curr;
@@ -118,12 +122,12 @@ Vec Agent::play(GameState state){
     }
     
     int cycles = limit;
-    int reward = getReward(root->neighbors[0]->location, 1, cycles);
+    int reward = getReward(root->neighbors[0]->location, 1, cycles, 0);
 
     std::cout << reward << std::endl;
     int pos = 0;
     for (int i = 1; i < root->neighbors.size(); i++){
-        int curr = getReward(root->neighbors[i]->location, 1, cycles);
+        int curr = getReward(root->neighbors[i]->location, 1, cycles, 0);
         std::cout << curr << std::endl;
         if (curr > reward){
             std::cout << "better option at " << i << std::endl;
