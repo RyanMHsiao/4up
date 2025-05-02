@@ -75,17 +75,19 @@ void GameInterface::initButtons(){
         ArrayList<Button*> row;
         for (int j = 0; j < state.getCols(); j++){
             Button* curr = new Button(0, 0, 1, 1);
+            buttons[i][j]->labelsize(32);
+            ON_CLICK(buttons[i][j], GameInterface::handleClick);
             row.append(curr);
         }
         buttons.append(row);
     }
 
-    for (int i = 0; i < buttons.size(); i++){
-        for (int j = 0; j < buttons[i].size(); j++){
-            buttons[i][j]->labelsize(32);
-            ON_CLICK(buttons[i][j], GameInterface::handleClick);
-        }
-    }
+    // for (int i = 0; i < buttons.size(); i++){
+    //     for (int j = 0; j < buttons[i].size(); j++){
+    //         buttons[i][j]->labelsize(32);
+    //         ON_CLICK(buttons[i][j], GameInterface::handleClick);
+    //     }
+    // }
 }
 
 void GameInterface::showButtons(){
