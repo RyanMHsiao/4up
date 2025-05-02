@@ -75,6 +75,7 @@ void GameInterface::initButtons(){
         ArrayList<Button*> row;
         for (int j = 0; j < state.getCols(); j++){
             Button* curr = new Button(0, 0, 1, 1);
+            curr->box(FL_ROUND_UP_BOX);
             curr->labelsize(32);
             ON_CLICK(curr, GameInterface::handleClick);
             row.append(curr);
