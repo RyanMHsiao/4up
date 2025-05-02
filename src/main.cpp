@@ -43,6 +43,7 @@ using namespace std;
 
 // int main(){
 
+
 //     // The logic related to app.run is complicated and hidden to us
 //     // So we instead just use our own functions for this phase of testing
 //     // Application app;
@@ -50,6 +51,11 @@ using namespace std;
 //     // app.runTUI(6, 7);
 
 //     // return app.run();
+
+    // app.runTUI(6, 7);
+
+    return app.run();
+
 
     
 

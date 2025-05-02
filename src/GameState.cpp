@@ -242,13 +242,16 @@ int GameState::getCurrentTurn() const {
     return numCols;
 }
 
+
 int GameState::getRows() const {
     return numRows;
 }
 
+
 int GameState::getElapsedTurns() const {
     return elapsedTurns;
 }
+
 
  int GameState::getSize() const {
     return numRows * numCols;
@@ -285,6 +288,9 @@ std::string GameState::squareState(int row, int col) const {
         return "empty";
     }
     return(board[row][col] == 0) ? "red" : "yellow";    
+
+int GameState::getCols() const {
+    return numCols;
 }
 
 char GameState::squareStateChar(int row, int col) const {
