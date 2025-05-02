@@ -114,18 +114,34 @@ void GameInterface::hideButtons(){
 }
 
 void GameInterface::updateButtons(){
-    for (int i = 0; i < state.getRows(); i++){
-        if (state.buttonState(i, state.getCols() == 0)){
-            //Make it red
-            cout << "button " << i << "is red" << endl;
-            buttons[i][state.getCols()]->color(fl_rgb_color(255, 0, 0));
-            buttons[i][state.getCols()]->color2(fl_rgb_color(255, 0, 0));
+//rows
+for(int i = 0; i < state.getRows(); i++){
+    //columns
+    for (int j = 0; j < state.getCols(); j++){
+        std::string stateStr = state.squareState(i,j);
+        buttons[i][j]->label(stateStr.c_str());
+
+        if (stateStr == "red"){
+            buttons[i][j]->color(fl_rgb_color(255, 0, 0));
+            buttons[i][j]->color2(fl_rgb_color(255, 0, 0));
         }
+        
+    }
+
+
+}
+    // for (int i = 0; i < state.getRows(); i++){
+    //     if (state.buttonState(i, state.getCols() == 0)){
+    //         //Make it red
+    //         cout << "button " << i << "is red" << endl;
+    //         buttons[i][state.getCols()]->color(fl_rgb_color(255, 0, 0));
+    //         buttons[i][state.getCols()]->color2(fl_rgb_color(255, 0, 0));
+    //     }
 
 //         for (int j = 0; j < state.getCols(); j++){
 //             buttons[i][j]->label(state.squareState(i, j));
 //         }
-    }
+    // }
 }
 
 void GameInterface::show() {
