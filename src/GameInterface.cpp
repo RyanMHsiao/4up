@@ -122,7 +122,7 @@ void GameInterface::updateButtons(){
             }
 
             else if (stateStr == "yellow"){
-                buttons[i][j]->color(fl_rgb_color(255, 0, 0));
+                buttons[i][j]->color(fl_rgb_color(255, 255, 0));
                 buttons[i][j]->color2(fl_rgb_color(255, 255, 0));
             }
             //gray
