@@ -71,9 +71,9 @@ bool GameInterface::checkWinningConditions(){
 
 void GameInterface::initButtons(){
 
-    for (int i = 0; i < 5; i++){
+    for (int i = 0; i < state.getRows(); i++){
         ArrayList<Button*> row;
-        for (int j = 0; j < 5; j++){
+        for (int j = 0; j < state.getCols(); j++){
             Button* curr = new Button(0, 0, 1, 1);
             row.append(curr);
         }
