@@ -143,7 +143,7 @@ bool GameState::play(int col){
 
 
 int GameState::getCurrentTurn() const {
-    cout <<"Whose turn is it?" <<endl;
+    // cout <<"Whose turn is it?" <<endl;
     return currentTurn;
  }
 

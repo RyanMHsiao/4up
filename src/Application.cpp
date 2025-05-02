@@ -48,6 +48,7 @@ void Application::runTUI(int rows, int cols) {
     // agent = Agent();
 
     while (!state.gameOver()) {
+        gameInterface->setState(state);
         if(artificialPlay && artificial){
             Vec spot = Agent::play(state);
             state.play(spot.y);

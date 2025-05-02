@@ -16,16 +16,17 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
     
     state = initialState;
 
+    for (int i = 0; i < state.getCols(); i++){
+        for (int j = 0; j < state.getRows(); j++) {
+            int x_coord = x + i*50;
+            int y_coord = y + j*50;
+            Button* temp = new Button(x_coord, y_coord, 40, 40, "");
+            temp->box(FL_ROUND_UP_BOX);
 
-    for (int i = 0; i < 7; i++){
-        int x_coord = x + i*50;
-        int y_coord = 100;
-        Button* temp = new Button(x_coord, y_coord, 40, 40, "");
-        temp->box(FL_ROUND_UP_BOX);
+            ON_CLICK(temp, GameInterface::handleClick);
 
-        ON_CLICK(temp, GameInterface::handleClick);
-
-        buttons.append(temp);
+            buttons.append(temp);
+        }
     }
 
     updateButtons();
@@ -55,13 +56,16 @@ void GameInterface::handleClick(Widget *sender){
 
 void GameInterface::updateButtons(){
     for (int i = 0; i < buttons.size(); i++){
-        if (state.squareStateChar(5, i) == 'X'){
+        int row = i % state.getRows();
+        int col = i / state.getRows();
+        // cout << i << ' ' << state.squareStateChar(row, col) << '\n';
+        if (state.squareStateChar(row, col) == 'X'){
             // Make it red
             cout << "Button " << i << " red" << endl;
             buttons[i]->color(fl_rgb_color(255, 0, 0));
             buttons[i]->color2(fl_rgb_color(255, 0, 0));
         }
-        else if (state.squareStateChar(5, i) == 'O'){
+        else if (state.squareStateChar(row, col) == 'O'){
             // Make it blue
             cout << "Button " << i << " blue" << endl;
             buttons[i]->color(fl_rgb_color(0, 0, 255));
@@ -69,7 +73,7 @@ void GameInterface::updateButtons(){
         }
         else{
             // Make it gray
-            cout << "Button " << i << " gray" << endl;
+            // cout << "Button " << i << " gray" << endl;
             buttons[i]->color(49);
             buttons[i]->color2(49);
         }
@@ -79,13 +83,13 @@ void GameInterface::updateButtons(){
 
 
 void GameInterface::hideButtons(){
-    for (int i = 0; i < 7; i++){
+    for (int i = 0; i < buttons.size(); i++){
         buttons[i]->hide();
     }
 }
 
 void GameInterface::showButtons(){
-    for (int i = 0; i < 7; i++){
+    for (int i = 0; i < buttons.size(); i++){
         buttons[i]->show();
     }
 }
@@ -116,4 +120,5 @@ void GameInterface::setState(GameState state){
         message = "Player vs AI";
     }
     statusBar->label(message);
+    updateButtons();
 }

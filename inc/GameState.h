@@ -93,7 +93,7 @@ public:
 };
 
 inline std::ostream& operator<<(std::ostream& os, const GameState& state){
-    os << "Printing the game state";
+    os << "Printing the game state\n";
 
     for (int y = 0; y < state.getRows(); ++y) {
         for (int x = 0; x < state.getCols(); ++x) {
