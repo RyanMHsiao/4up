@@ -31,7 +31,7 @@ void GameInterface::handleClick(Widget *sender){
     for (int i = 0; i < state.getRows(); i++){
         for (int j = 0; j < state.getCols(); j++){
             if (sender == buttons[i][j]){
-                state.play(i);
+                state.play(j);
                 updateButtons();
 
                 bool done = checkWinningConditions();
@@ -130,6 +130,7 @@ void GameInterface::updateButtons(){
                 buttons[i][j]->color(fl_rgb_color(255, 0, 0));
                 buttons[i][j]->color2(fl_rgb_color(255, 255, 0));
             }
+            //gray
             else {
                 buttons[i][j]->color(fl_rgb_color(250, 250, 250));
                 buttons[i][j]->color2(fl_rgb_color(250, 250, 250));
