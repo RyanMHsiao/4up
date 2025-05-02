@@ -36,11 +36,16 @@ class GameState{
     bool currentTurn; //0 = player 0, 1 = player 1
     bool enabledAI;
     Vec lastMove;
+    bool done;
     int elapsedTurns;
     
 public:
 //Initialize default game state
     GameState(int numRows = 6, int numCols = 7); //constructor with default 6x7
+
+    GameState(const GameState& other);
+
+    GameState& operator=(const GameState& other);
 
     int getRows() const;
     int getCols() const;
@@ -65,6 +70,10 @@ public:
 
     bool getEnabledAI() const; //is the AI on?
 
+    //is the board completely filled
+    //if all columns are occupied and no player has won, we have a tie
+    bool isFull() const; 
+
     bool hasSpace(int col) const;
 
     Vec getLastMove() const; //get the last move (row, col)
@@ -84,7 +93,7 @@ public:
 };
 
 inline std::ostream& operator<<(std::ostream& os, const GameState& state){
-    os << "Printing the game state";
+    os << "Printing the game state\n";
 
     for (int y = 0; y < state.getRows(); ++y) {
         for (int x = 0; x < state.getCols(); ++x) {
