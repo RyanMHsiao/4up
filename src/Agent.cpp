@@ -47,17 +47,20 @@ int Agent::getReward(Vertex<GameState>* start, int player, int cycles){
     // If it is a terminal state, evaluate it directly
    
         // std::cout << start->neighbors.size() << " and " << i << std::endl;
-        
-    if (start->data.hasWon(player)){
-        return 100 * cycles + 100;
-    }
-    else if (start->data.hasWon(!player)){
-        // std::cout << -100 + (-100 * i) << std::endl;
-        return (-100 * cycles);
-    }
-
     if(start->neighbors.size() == 0){
-        return 50 * cycles + 1;
+        if (start->data.hasWon(player)){
+            return 100 * cycles + 100;
+        }
+        else if (start->data.hasWon(!player)){
+            // std::cout << -100 + (-100 * i) << std::endl;
+            // std::cout << cycles << " is the cycle" << std::endl;
+            return (-100 * cycles);
+        }
+
+        if(cycles == 2){
+            return 50 * cycles + 1;
+        }
+
     }
     
     // If it is not a terminal state (it has children),
@@ -115,6 +118,7 @@ Vec Agent::play(GameState state){
     
     int cycles = limit;
     int reward = getReward(root->neighbors[0]->location, 1, cycles);
+
     std::cout << reward << std::endl;
     int pos = 0;
     for (int i = 1; i < root->neighbors.size(); i++){
@@ -136,6 +140,17 @@ Vec Agent::play(GameState state){
     if(reward <= -100){
         std::cout << "Always lose from here" << reward << std::endl;
         // pos = oneOff();
+    }
+
+    if(reward == -100 * (limit - 1)){
+        //This is to see if there is multiple win scenarios for human, and will try blocking one of them at least to be less stupid
+        int possibleWins = 0;
+
+        for(int count = 0; count < root->neighbors.size(); count++){
+            
+        }
+
+        std::cout << "Possible wins: " << possibleWins << std::endl;
     }
 
     return root->neighbors[pos]->location->data.getLastMove();
