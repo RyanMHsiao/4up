@@ -117,6 +117,20 @@ void Application::handleApplyBtnClick(Widget* sender){
     gameInterface->show();
 }
 
+void Application::handleTwoPlayersClick(Widget *sender){
+    state = GameState();
+    state.disableAI();
+    gameInterface->setState(state);
+    gameInterface->reset();
+}
+
+void Application::handleAIClick(Widget *sender){
+    state = GameState();
+    state.enableAI();
+    gameInterface->setState(state);
+    gameInterface->reset();
+}
+
 void Application::handleQuitMenuClick(Widget *sender){
     exit(0);
 }
