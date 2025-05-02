@@ -6,6 +6,7 @@ GameState::GameState(int numRows, int numCols){
     this->numRows = numRows;
     this->numCols = numCols;
     currentTurn = 0;
+    done = false;
     
     enabledAI = false;
 
@@ -20,6 +21,38 @@ GameState::GameState(int numRows, int numCols){
         board.append(row); //append the completed row to the board
     }
     // cout<<"Initializing Connect 4 state with size"<< numRows <<"x"<<numCols <<endl;
+}
+
+//copy constructor
+
+GameState::GameState(const GameState& other){
+    numRows = other.numRows;
+    numCols = other.numCols;
+    currentTurn = other.currentTurn;
+    enabledAI = other.enabledAI;
+    lastMove = other.lastMove;
+
+    //Deep copy the 2D board
+
+    for(int i = 0; i< other.board.size(); i++){
+        board.append(other.board[i]);
+
+    }
+}
+
+//copy assignment operator
+GameState& GameState::operator=(const GameState & other){
+if(this != &other ){
+    numRows = other.numRows;
+    numCols = other.numCols;
+    currentTurn = other.currentTurn;
+    enabledAI = other.enabledAI;
+    lastMove = other.lastMove;
+    board = other.board; //triggering ArrayList deep copy
+
+}
+return *this;
+
 }
 
 //For the agent, used to see if the person being checked is one off from winning
@@ -110,19 +143,23 @@ bool GameState::play(int col){
 
 
 int GameState::getCurrentTurn() const {
-    // cout <<"Whose turn is it?" <<endl;
-    return 0;
+    cout <<"Whose turn is it?" <<endl;
+    return currentTurn;
+ }
+
+//tells if no more moves can be made (helps detect a draw)
+ bool GameState::isFull() const{
+    for (int col = 0; col < numCols; ++col){
+        if (board[0][col]== -1){
+            return false;
+        }
+    }
+    return true;
  }
 
 
  bool GameState::gameOver() const {
-    // cout << "Checking if the game is over" << endl;
-    if(hasWon(0) || hasWon(1)){
-        return true;
-    }
-
-   
-   return false;
+    return hasWon(0) || hasWon(1) || isFull();
  }
 
  int GameState::getSize() const {
@@ -135,6 +172,40 @@ int GameState::getCurrentTurn() const {
 
 bool GameState::hasSpace(int col) const {
     return board[0][col] == -1;
+}
+
+Vec GameState::getLastMove() const {
+    cout << "Getting the last move that was made" << endl;
+
+    return lastMove;
+}
+
+
+void GameState::reset(){
+    currentTurn = 0;
+    lastMove.set(-1, -1);
+    enabledAI = false;
+
+    //Clear and reinitialize the board with -1 (empty)
+    for (int i = 0; i < numRows; i++){
+        for (int j = 0; j < numCols; j++){
+            board[i][j] = -1;
+        }
+    }
+
+    cout << "Game state reset to empty" << numRows <<"x" << numCols << "board." <<endl;
+}
+
+void GameState::enableAI(){
+    enabledAI = true;
+}
+
+void GameState::disableAI(){
+    enabledAI = false;
+}
+
+bool GameState::getEnabledAI() const{
+    return enabledAI;
 }
 
 std::string GameState::squareState(int row, int col) const {
@@ -156,41 +227,8 @@ char GameState::squareStateChar(int row, int col) const {
     }
 }
 
-Vec GameState::getLastMove() const {
-    return lastMove;
-}
-
 int GameState::getElapsedTurns() const {
     return elapsedTurns;
-}
-
-
-void GameState::reset(){
-    /*
-    currentTurn = 0;
-    turnCount = 0;
-    done = false;
-
-    lastMove.set(-1, -1);
-
-    for (int i = 0; i < size; i++){
-        for (int j = 0; j < size; j++){
-            grid[i][j] = -1;
-        }
-    }
-    */
-}
-
-void GameState::enableAI(){
-    enabledAI = true;
-}
-
-void GameState::disableAI(){
-    enabledAI = false;
-}
-
-bool GameState::getEnabledAI() const{
-     return enabledAI;
 }
 
 int GameState::getCols() const {
@@ -200,12 +238,3 @@ int GameState::getCols() const {
 int GameState::getRows() const {
     return numRows;
 }
-
-// GameState::~GameState(){
-//     for (int i = 0; i < size; i++){
-//         delete[] grid[i];
-//     }
-//     delete[] grid;
-// }
-
-

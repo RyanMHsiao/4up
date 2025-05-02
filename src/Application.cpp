@@ -10,7 +10,7 @@ using namespace bobcat;
 using namespace std;
 
 Application::Application(){
-    
+
     window = new Window(100, 100, 400, 400, "Connect4");
 
     state = GameState();
@@ -41,6 +41,7 @@ Application::Application(){
     ON_CLICK(applyButton, Application::handleApplyBtnClick);
 
     window->show();
+
     
     twoPlayersButton = new Button(30, 35, 155, 25, "Player vs Player");
     AIButton = new Button(215, 35, 155, 25, "Player vs AI");
@@ -50,6 +51,7 @@ Application::Application(){
 
     twoPlayersButton->show();
     AIButton->show();
+
 }
 
 void Application::runTUI(int rows, int cols) {
@@ -82,7 +84,6 @@ void Application::runTUI(int rows, int cols) {
     std::cout << state << "\n";
     std::cout << "game over\n";
 }
-
 
 
 void Application::handleNewGameMenuClick(Widget *sender){
@@ -134,3 +135,6 @@ void Application::handleAIClick(Widget *sender){
 void Application::handleQuitMenuClick(Widget *sender){
     exit(0);
 }
+
+}
+
