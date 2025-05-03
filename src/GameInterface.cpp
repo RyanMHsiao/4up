@@ -82,31 +82,6 @@ bool GameInterface::checkWinningConditions(){
     return result;
 }
 
-void GameInterface::updateButtons(){
-    for (int i = 0; i < buttons.size(); i++){
-        if (state.squareStateChar(5, i) == 'X'){
-            // Make it red
-            cout << "Button " << i << " red" << endl;
-            buttons[i]->color(fl_rgb_color(255, 0, 0));
-            buttons[i]->color2(fl_rgb_color(255, 0, 0));
-        }
-        else if (state.squareStateChar(5, i) == 'O'){
-            // Make it blue
-            cout << "Button " << i << " blue" << endl;
-            buttons[i]->color(fl_rgb_color(0, 0, 255));
-            buttons[i]->color2(fl_rgb_color(0, 0, 255));
-
-        }
-        else{
-            // Make it gray
-            cout << "Button " << i << " gray" << endl;
-            buttons[i]->color(49);
-            buttons[i]->color2(49);
-        }
-        buttons[i]->redraw();
-    }
-}
-
 void GameInterface::initButtons(){
 
     for (int i = 0; i < state.getRows(); i++){
@@ -119,7 +94,7 @@ void GameInterface::initButtons(){
             ON_CLICK(curr, GameInterface::handleClick);
             row.append(curr);
         }
-        buttons.append(row);
+        buttons.append(row); 
     }
 }
 
@@ -149,6 +124,7 @@ void GameInterface::hideButtons(){
     }
 }
 
+
 void GameInterface::updateButtons(){
     //rows
     for(int i = 0; i < state.getRows(); i++){
@@ -172,18 +148,6 @@ void GameInterface::updateButtons(){
                 buttons[i][j]->color2(fl_rgb_color(250, 250, 250));
             }
         }
-
-
-void GameInterface::hideButtons(){
-    for (int i = 0; i < 7; i++){
-        buttons[i]->hide();
-    }
-}
-
-void GameInterface::showButtons(){
-    for (int i = 0; i < 7; i++){
-        buttons[i]->show();
-
     }
 }
 

@@ -27,6 +27,8 @@ class GameInterface{
 
     void hideButtons();
     void showButtons();
+    // void checkWinningConditions();
+    void initButtons();
 
 public:
 
