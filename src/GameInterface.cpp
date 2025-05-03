@@ -73,6 +73,14 @@ bool GameInterface::checkWinningConditions(){
         }
         else if (state.hasWon(1)){
             showMessage("Player 2 has won.\nClick Close to start a new game.", "Game Over");
+        }
+        else{
+            showMessage("It is a tie.\nClick Close to start a new game.", "Game Over");
+        }
+        reset();
+    }
+    return result;
+}
 
 void GameInterface::updateButtons(){
     for (int i = 0; i < buttons.size(); i++){
