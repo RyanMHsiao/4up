@@ -1,5 +1,7 @@
 #include <FL/Enumerations.H>
 #include <FL/Fl_Window.H>
+#include <FL/Fl_Box.H>
+
 
 #include <GameInterface.h>
 #include <Agent.h>
@@ -16,8 +18,15 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
     this->w = w;
     this->h = h;
     
+    
     state = initialState;
 
+
+    Fl_Box* boardBackground;
+
+    boardBackground = new Fl_Box(x, y, w, h);
+    boardBackground->box(FL_FLAT_BOX);
+    boardBackground->color(fl_rgb_color(0, 0, 255));
 
     for (int i = 0; i < 7; i++){
         int x_coord = x + i*50;
@@ -31,7 +40,6 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
     }
 
     updateButtons();
-
 
     string message = "Player vs Player";
     if (state.getEnabledAI()){
@@ -98,7 +106,8 @@ void GameInterface::initButtons(){
         for (int j = 0; j < state.getCols(); j++){
             Button* curr = new Button(0, 0, 1, 1);
             curr->box(FL_ROUND_UP_BOX);
-            curr->labelsize(32);
+
+            curr->labelsize(20);
             ON_CLICK(curr, GameInterface::handleClick);
             row.append(curr);
         }
@@ -107,6 +116,7 @@ void GameInterface::initButtons(){
 }
 
 void GameInterface::showButtons(){
+
 
     int btnW = w / state.getCols();
     int btnH = h / state.getRows();
