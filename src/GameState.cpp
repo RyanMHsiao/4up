@@ -288,22 +288,27 @@ bool GameState::getEnabledAI() const{
 }
 
 std::string GameState::squareState(int row, int col) const {
-    if (row < 0 || row >= numRows || col < 0 || col >= numCols) {
-        return "invalid";
+    int state = buttonState(row, col); //Reuse buttonState's bounds checking
+
+    if (state == -1){
+        if(row < 0 || row >= numRows || col < 0 || col >= numCols){
+            return "invalid"; //position is out of bounds
+        }
+        return "empty"; //position is valid but empty
     }
-    if (board[row][col] == -1){
-        return "empty";
-    }
-    return(board[row][col] == 0) ? "red" : "yellow";    
+    return(state == 0) ? "red" : "yellow"; //player 0 is red, player 1 is yellow   
 }
 
 char GameState::squareStateChar(int row, int col) const {
-    if (row < 0 || row >= numRows || col < 0 || col >= numCols) {
-        return '?'; //invalid position
-    }  if (board[row][col] == -1) {
-        return '.'; //using '.' for empty slots
-    } 
-        return (board[row][col] == 0) ? 'R' : 'y'; //R = red, Y = yellow
+    int state = buttonState(row, col);
+
+    if(state == -1){
+        if (row < 0 || row >= numRows || col < 0 || col >= numCols){
+            return '?'; //invalid position
+        }
+        return '.'; //empty position
+    }
+    return (state == 0) ? 'R' : 'Y'; //player 0 is R and, player 1 is y
     
 }
 
