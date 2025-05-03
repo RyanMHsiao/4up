@@ -257,6 +257,13 @@ int GameState::getElapsedTurns() const {
     return numRows * numCols;
  }
 
+ int GameState::buttonState(int row, int col) const{
+    if (row < 0 || row >= numRows || col < 0 || col >= numCols){
+        return -1; //out of bounds positions return -1
+    }
+    return board[row][col]; //returns -1 (empty), 0 (player 0), or 1 (player 1)
+ }
+
  Vec GameState::getBoardDimensions() const{
     return Vec(numRows, numCols);
  }
