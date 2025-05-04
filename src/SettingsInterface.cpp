@@ -57,13 +57,6 @@ void SettingsInterface::applyUpdates(){
     else if (enableAISelector->value() == 1){
         shouldEnableAI = false;
     }
-
-    if (newSize != state.getSize()){
-        state.enableAI();
-    }
-    else{
-        state.disableAI();
-    }
     
 }
 

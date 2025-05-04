@@ -67,7 +67,7 @@ void GameInterface::handleClick(Widget *sender){
                 if (!done){
                     if (state.getEnabledAI()){
                         Vec move = Agent::play(state);
-                        state.play(move.x);
+                        state.play(move.y);
                         updateButtons();
                         checkWinningConditions();
                     }
