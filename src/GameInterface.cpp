@@ -21,12 +21,10 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
     
     state = initialState;
 
-
-    Fl_Box* boardBackground;
-
     boardBackground = new Fl_Box(x, y, w, h);
     boardBackground->box(FL_FLAT_BOX);
     boardBackground->color(fl_rgb_color(0, 0, 255));
+
 
     for (int i = 0; i < state.getRows(); i++){
         ArrayList<bobcat::Button *> row;
@@ -45,13 +43,13 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
 
     updateButtons();
 
+
     string message = "Player vs Player";
     if (state.getEnabledAI()){
         message = "Player vs AI";
     }
 
     statusBar = new TextBox(x, h-25 + y, w, 25, message);
-    statusBar->align(FL_ALIGN_CENTER);
 
     initButtons(); 
     showButtons();
@@ -105,7 +103,7 @@ void GameInterface::initButtons(){
             Button* curr = new Button(0, 0, 1, 1);
             curr->box(FL_ROUND_UP_BOX);
 
-            curr->labelsize(20);
+            curr->labelsize(32);
             ON_CLICK(curr, GameInterface::handleClick);
             row.append(curr);
         }
@@ -168,11 +166,13 @@ void GameInterface::updateButtons(){
 
 void GameInterface::show() {
     statusBar->show();
+    boardBackground->show();
     showButtons();
 }
 
 void GameInterface::hide() {
     statusBar->hide();
+    boardBackground->hide();
     hideButtons();
 }
 
