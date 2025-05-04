@@ -1,6 +1,7 @@
 // #include <FL/Enumerations.H>
 #include <FL/Enumerations.H>
 #include <SettingsInterface.h>
+#include <GameState.h>
 #include <bobcat_ui/dropdown.h>
 #include <bobcat_ui/textbox.h>
 #include <new>
@@ -39,10 +40,10 @@ SettingsInterface::SettingsInterface(int x, int y, int w, int h, GameState state
 
 void SettingsInterface::applyUpdates(){
     int newSize = 0;
-    bool shouldEnableAI;
+    // bool shouldEnableAI;
 
     if (gridSizeSelector->value() == 0) {
-        newSize = 6;
+        // ;
     }
     else if (gridSizeSelector->value() == 1) {
         newSize = 7;
@@ -52,10 +53,10 @@ void SettingsInterface::applyUpdates(){
     }
 
     if (enableAISelector->value() == 0){
-        shouldEnableAI = true;
+        state.enableAI();
     }
     else if (enableAISelector->value() == 1){
-        shouldEnableAI = false;
+        state.disableAI();
     }
     
 }
