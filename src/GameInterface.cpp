@@ -58,10 +58,12 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
 }
 
 void GameInterface::handleClick(Widget *sender){
+    std::cout << "clicked!\n";
     for (int i = 0; i < state.getRows(); i++){
         for (int j = 0; j < state.getCols(); j++){
             if (sender == buttons[i][j]){
                 
+                std::cout << "clicked " << i << " " << j << "\n";
                 state.play(j);
                 updateButtons();
                 bool done = checkWinningConditions();
