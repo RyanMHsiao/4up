@@ -28,26 +28,12 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
     boardBackground->box(FL_FLAT_BOX);
     boardBackground->color(fl_rgb_color(0, 0, 255));
 
-    for (int i = 0; i < 7; i++){
-        int x_coord = x + i*50;
-        int y_coord = 100;
-        Button* temp = new Button(x_coord, y_coord, 40, 40, "");
-        temp->box(FL_ROUND_UP_BOX);
-
-        ON_CLICK(temp, GameInterface::handleClick);
-
-        buttons.append(temp);
-    }
-
-    updateButtons();
-
     string message = "Player vs Player";
     if (state.getEnabledAI()){
         message = "Player vs AI";
     }
 
     statusBar = new TextBox(x, h-25 + y, w, 25, message);
-    statusBar->align(FL_ALIGN_CENTER);
 
     initButtons(); 
     showButtons();
@@ -101,7 +87,7 @@ void GameInterface::initButtons(){
             Button* curr = new Button(0, 0, 1, 1);
             curr->box(FL_ROUND_UP_BOX);
 
-            curr->labelsize(20);
+            curr->labelsize(32);
             ON_CLICK(curr, GameInterface::handleClick);
             row.append(curr);
         }
