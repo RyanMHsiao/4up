@@ -321,7 +321,7 @@ std::string GameState::squareState(int row, int col) const {
         }
         return "empty"; //position is valid but empty
     }
-    return(state == 0) ? "red" : "yellow"; //player 0 is red, player 1 is yellow   
+    return" ";  //player 0 is red, player 1 is yellow   
 }
 
 char GameState::squareStateChar(int row, int col) const {
@@ -333,7 +333,7 @@ char GameState::squareStateChar(int row, int col) const {
         }
         return '.'; //empty position
     }
-    return (state == 0) ? 'R' : 'Y'; //player 0 is R and, player 1 is y
+    return  ' '; //return space for occupied position (color will be shown instead)
     
 }
 
