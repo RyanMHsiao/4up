@@ -212,27 +212,6 @@ bool GameState::play(int col){
     return board[0][col] == -1;
 }
 
-void GameState::reset(){
-    currentTurn = 0;
-    elapsedTurns = 0;
-    done = false;
-    lastMove.set(-1, -1);
-    
-
-    //Clear and reinitialize the board with -1 (empty)
-    while (board.size() > 0){
-        board.removeLast();
-    }
-
-    for (int i = 0; i < numRows; i++){
-        ArrayList<int> row;
-        for (int j = 0; j < numCols; j++){
-            row.append(-1);
-        }
-        board.append(row);
-    }
-}
-
 
 int GameState::getCurrentTurn() const {
     return currentTurn;
@@ -281,6 +260,52 @@ void GameState::enableAI(){
 
 void GameState::disableAI(){
     enabledAI = false;
+}
+
+void GameState:: resize(int newRows, int newCols){
+    if(newRows == numRows && newCols == numCols) return; //no change needed
+    
+    //clear current board
+    while(board.size() > 0) {
+        board.removeLast();
+    }
+
+    //update dimensions
+    numRows = newRows;
+    numCols = newCols;
+
+    //Initialize new board
+    for(int i = 0; i < numRows; i++){
+        ArrayList<int> row;
+        for (int j = 0; j<numCols; j++){
+            row.append(-1); //fill with empty cells
+        }
+        board.append(row);
+    }
+
+    //Reset game state
+    reset();
+}
+
+void GameState::reset(){
+    currentTurn = 0;
+    elapsedTurns = 0;
+    done = false;
+    lastMove.set(-1, -1);
+    
+
+    //Clear and reinitialize the board with -1 (empty)
+    while (board.size() > 0){
+        board.removeLast();
+    }
+
+    for (int i = 0; i < numRows; i++){
+        ArrayList<int> row;
+        for (int j = 0; j < numCols; j++){
+            row.append(-1);
+        }
+        board.append(row);
+    }
 }
 
 bool GameState::getEnabledAI() const{
