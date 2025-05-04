@@ -187,8 +187,17 @@ Vec Agent::play(GameState state){
     //This is primarily going to be used for the first couple of turns when the AI does not have much to respond to
     //It will choose to play closer towards the center in open columns
     //Will only properly run when 3 or more columns return "0" also
+    //In the extremely off chance that this logic will cause the AI to lose, it will just default to what it has been doing
+
     if(zeroColumns > 2){
-            pos = state.getLeastFilledRow();
+            int spotToPlay = state.getLeastFilledRow();
+            GameState root2 = GameState(state);
+            root2.forceOpponentSimulation(spotToPlay);
+            if(root2.hasWon(1) || root2.hasWon(0)){
+                //This is intentionally blank, indicating it will cause AI to lose
+            } else {
+                pos = spotToPlay;
+            }
     }
 
     return root->neighbors[pos]->location->data.getLastMove();
