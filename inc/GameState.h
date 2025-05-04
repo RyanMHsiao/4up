@@ -25,6 +25,11 @@ struct Vec{
 
 };
 
+inline std::ostream& operator<<(std::ostream& os, const Vec& v){
+    os <<"(" << v.x << "," << v.y << ")";
+    return os;
+}
+
 
 class GameState{
     // variables needed for state:
@@ -34,10 +39,12 @@ class GameState{
     int numRows;
     int numCols;
     bool currentTurn; //0 = player 0, 1 = player 1
-    bool enabledAI;
-    Vec lastMove;
-    bool done;
     int elapsedTurns;
+    bool enabledAI;
+    bool done;
+    Vec lastMove;
+    
+    
     
 public:
 //Initialize default game state
@@ -45,48 +52,46 @@ public:
 
     GameState(const GameState& other);
 
+    bool operator==(const GameState& other) const;
+
     GameState& operator=(const GameState& other);
-
-    int getRows() const;
-    int getCols() const;
-
-    int getCurrentTurn() const; //whose turn?
-
-    int buttonState(int row, int col) const;
 
     bool play(int col); //play into a column, update state resulting from players move
 
     int getLeastFilledRow() const;
     
     bool hasWon(int player) const; //has a player won?
-
     bool gameOver() const; //is the game over?
-
-    int getSize() const; //what is the size of the game
-
-    void enableAI(); //turn on the AI
-
-    void disableAI(); //turn off the AI
-
-    bool getEnabledAI() const; //is the AI on?
-
     //is the board completely filled
     //if all columns are occupied and no player has won, we have a tie
     bool isFull() const; 
-
     bool hasSpace(int col) const;
 
-    Vec getLastMove() const; //get the last move (row, col)
-
     void reset();
+    void enableAI();
+    // turn on the AI
+    void disableAI();
+    bool getEnabledAI() const;
+    // is the AI on?
 
+    int getCurrentTurn() const; //whose turn?
+    int getSize() const; //what is the size of the game
+    int getRows() const;
+    int getCols() const;
+
+    
+
+    int buttonState(int row, int col) const;
+    int getElapsedTurns() const; //don't know if this will be useful
+
+    
     Vec getBoardDimensions() const;
-
+    Vec getLastMove() const;
+    // get the last move (row, col)
     std::string squareState(int row, int col) const;
-
     char squareStateChar(int row, int col) const;
 
-    int getElapsedTurns() const;
+    // int getElapsedTurns() const;
 
     // Messes up the state. Do not use this outside of agent.
     void forceOpponentSimulation(int col);
@@ -95,15 +100,39 @@ public:
 };
 
 inline std::ostream& operator<<(std::ostream& os, const GameState& state){
-    os << "Printing the game state\n";
+    
 
-    for (int y = 0; y < state.getRows(); ++y) {
-        for (int x = 0; x < state.getCols(); ++x) {
-            os << state.squareStateChar(y, x);
+    //Print column headers
+    os << "     ";
+    for(int col = 0; col < state.numCols; col++){
+        os << col << "   ";
+    }
+    os << "\n";
+
+    //print top border
+    os << "    ";
+    for(int col = 0; col < state.numCols; col++){
+        os << "----";
+    }
+    os << "-\n";
+
+    //Print each row
+    for (int row = 0; row < state.numRows; row++){
+        os <<row << "  |";
+        for (int col = 0; col < state.numCols; col++){
+            char c = state.squareStateChar(row, col);
+            os << " "<< c << " |";
         }
         os << "\n";
-    }
 
+        //print row border
+        os << "  ";
+        for (int col = 0; col < state.numCols; col++){
+            os << "----";
+        }
+        os <<"-\n";
+    }
+ 
     return os;
 }
 

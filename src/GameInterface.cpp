@@ -1,4 +1,8 @@
 #include <FL/Enumerations.H>
+#include <FL/Fl_Window.H>
+#include <FL/Fl_Box.H>
+
+
 #include <GameInterface.h>
 #include <Agent.h>
 #include <bobcat_ui/bobcat_ui.h>
@@ -14,10 +18,17 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
     this->w = w;
     this->h = h;
     
+    
     state = initialState;
 
-    for (int i = 0; i < state.getCols(); i++){
-        for (int j = 0; j < state.getRows(); j++) {
+    boardBackground = new Fl_Box(x, y, w, h);
+    boardBackground->box(FL_FLAT_BOX);
+    boardBackground->color(fl_rgb_color(0, 0, 255));
+
+
+    for (int i = 0; i < state.getRows(); i++){
+        ArrayList<bobcat::Button *> row;
+        for (int j = 0; j < state.getCols(); j++) {
             int x_coord = x + i*50;
             int y_coord = y + j*50;
             Button* temp = new Button(x_coord, y_coord, 40, 40, "");
@@ -25,8 +36,9 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
 
             ON_CLICK(temp, GameInterface::handleClick);
 
-            buttons.append(temp);
+            row.append(temp);
         }
+        buttons.append(row);
     }
 
     updateButtons();
@@ -38,69 +50,129 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
     }
 
     statusBar = new TextBox(x, h-25 + y, w, 25, message);
-    statusBar->align(FL_ALIGN_CENTER);
 
+    initButtons(); 
+    showButtons();
 }
 
 void GameInterface::handleClick(Widget *sender){
-    for (int i = 0; i < buttons.size(); i++){
-        if (sender == buttons[i]){
-            // cout << "Button " << i << " was clicked" << endl;
-            state.play(i);
-            updateButtons();
-            // check winning conditions
-            return;
+    for (int i = 0; i < state.getRows(); i++){
+        for (int j = 0; j < state.getCols(); j++){
+            if (sender == buttons[i][j]){
+                
+                state.play(j);
+                updateButtons();
+                bool done = checkWinningConditions();
+
+                if (!done){
+                    if (state.getEnabledAI()){
+                        Vec move = Agent::play(state);
+                        state.play(move.x);
+                        updateButtons();
+                        checkWinningConditions();
+                    }
+                }
+                return;
+            }
         }
     }
 }
 
-void GameInterface::updateButtons(){
-    for (int i = 0; i < buttons.size(); i++){
-        int row = i % state.getRows();
-        int col = i / state.getRows();
-        // cout << i << ' ' << state.squareStateChar(row, col) << '\n';
-        if (state.squareStateChar(row, col) == 'X'){
-            // Make it red
-            cout << "Button " << i << " red" << endl;
-            buttons[i]->color(fl_rgb_color(255, 0, 0));
-            buttons[i]->color2(fl_rgb_color(255, 0, 0));
+bool GameInterface::checkWinningConditions(){
+    bool result = state.gameOver();
+    if (result){
+        if (state.hasWon(0)){
+            showMessage("Player 1 has won.\nClick Close to start a new game.", "Game Over");
         }
-        else if (state.squareStateChar(row, col) == 'O'){
-            // Make it blue
-            cout << "Button " << i << " blue" << endl;
-            buttons[i]->color(fl_rgb_color(0, 0, 255));
-            buttons[i]->color2(fl_rgb_color(0, 0, 255));
+        else if (state.hasWon(1)){
+            showMessage("Player 2 has won.\nClick Close to start a new game.", "Game Over");
         }
         else{
-            // Make it gray
-            // cout << "Button " << i << " gray" << endl;
-            buttons[i]->color(49);
-            buttons[i]->color2(49);
+            showMessage("It is a tie.\nClick Close to start a new game.", "Game Over");
         }
-        buttons[i]->redraw();
+        reset();
     }
+    return result;
 }
 
+void GameInterface::initButtons(){
 
-void GameInterface::hideButtons(){
-    for (int i = 0; i < buttons.size(); i++){
-        buttons[i]->hide();
+    for (int i = 0; i < state.getRows(); i++){
+        ArrayList<Button*> row;
+        for (int j = 0; j < state.getCols(); j++){
+            Button* curr = new Button(0, 0, 1, 1);
+            curr->box(FL_ROUND_UP_BOX);
+
+            curr->labelsize(32);
+            ON_CLICK(curr, GameInterface::handleClick);
+            row.append(curr);
+        }
+        buttons.append(row); 
     }
 }
 
 void GameInterface::showButtons(){
-    for (int i = 0; i < buttons.size(); i++){
-        buttons[i]->show();
+
+
+    int btnW = w / state.getCols();
+    int btnH = h / state.getRows();
+    for (int i = 0; i < state.getRows(); i++){
+        int btnY = y + btnH * i;
+        for (int j = 0; j < state.getCols(); j++){
+            int btnX = x + btnW * j;
+
+            buttons[i][j]->resize(btnX, btnY, btnW, btnH);
+            // buttons[i][j]->label(state.squareState(i, j));
+            buttons[i][j]->show();
+        }
+    }
+}
+
+void GameInterface::hideButtons(){
+
+    for (int i = 0; i < state.getRows(); i++){
+        for (int j = 0; j < state.getCols(); j++){
+            buttons[i][j]->hide();
+        }
+    }
+}
+
+
+void GameInterface::updateButtons(){
+    //rows
+    for(int i = 0; i < state.getRows(); i++){
+    //columns
+        for (int j = 0; j < state.getCols(); j++){
+            std::string stateStr = state.squareState(i,j);
+            buttons[i][j]->label("");
+
+            if (stateStr == "red"){
+                buttons[i][j]->color(fl_rgb_color(255, 0, 0));
+                buttons[i][j]->color2(fl_rgb_color(255, 0, 0));
+            }
+
+            else if (stateStr == "yellow"){
+                buttons[i][j]->color(fl_rgb_color(255, 255, 0));
+                buttons[i][j]->color2(fl_rgb_color(255, 255, 0));
+            }
+            //gray
+            else {
+                buttons[i][j]->color(fl_rgb_color(250, 250, 250));
+                buttons[i][j]->color2(fl_rgb_color(250, 250, 250));
+            }
+        }
     }
 }
 
 void GameInterface::show() {
     statusBar->show();
+    boardBackground->show();
     showButtons();
 }
 
 void GameInterface::hide() {
     statusBar->hide();
+    boardBackground->hide();
     hideButtons();
 }
 

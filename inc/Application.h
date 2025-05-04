@@ -18,7 +18,7 @@
 #include "SettingsInterface.h"
 
 class Application: public bobcat::Application_ {
-    // Application window
+
     bobcat::Window *window;
     
     // Application menu
@@ -26,6 +26,9 @@ class Application: public bobcat::Application_ {
     bobcat::MenuItem *newGame;
     bobcat::MenuItem *settings;
     bobcat::MenuItem *quit;
+
+    bobcat::Button *twoPlayersButton;
+    bobcat::Button *AIButton;
     
     // Application interface
     GameInterface *gameInterface;           // Game interface
@@ -42,6 +45,12 @@ class Application: public bobcat::Application_ {
     void handleCancelBtnClick(bobcat::Widget *sender);
     void handleApplyBtnClick(bobcat::Widget *sender);
     void handleQuitMenuClick(bobcat::Widget *sender);
+
+    void handleTwoPlayersClick(bobcat::Widget *sender);
+    void handleAIClick(bobcat::Widget *sender);
+    
+    // GameState state;
+
 
 public:
     Application();

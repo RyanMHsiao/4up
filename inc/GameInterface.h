@@ -1,6 +1,8 @@
 #ifndef GAME_INTERFACE_H
 #define GAME_INTERFACE_H
 
+#include <FL/Fl_Box.H>
+
 #include "ArrayList.h"
 #include <bobcat_ui/bobcat_ui.h>
 #include <bobcat_ui/button.h>
@@ -15,9 +17,11 @@ class GameInterface{
     int w;
     int h;
 
+    Fl_Box* boardBackground;
+
     GameState state;
 
-    ArrayList<bobcat::Button*> buttons;
+    ArrayList<ArrayList<bobcat::Button*>> buttons;
 
     bobcat::TextBox *statusBar;
 
@@ -27,6 +31,8 @@ class GameInterface{
 
     void hideButtons();
     void showButtons();
+    bool checkWinningConditions();
+    void initButtons();
 
 public:
 

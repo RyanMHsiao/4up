@@ -1,5 +1,9 @@
 // #include <FL/Enumerations.H>
+#include <FL/Enumerations.H>
 #include <SettingsInterface.h>
+#include <bobcat_ui/dropdown.h>
+#include <bobcat_ui/textbox.h>
+#include <new>
 
 using namespace std;
 using namespace bobcat;
@@ -16,22 +20,65 @@ SettingsInterface::SettingsInterface(int x, int y, int w, int h, GameState state
     pageHeading = new TextBox(x, y, w, 25, "Settings");
     pageHeading->labelsize(24);
     pageHeading->labelfont(FL_BOLD);
+
+    gridSizeSelector = new Dropdown(x, y + 50, w, 25, "Board Size");
+    gridSizeSelector->add("6x7");
+    gridSizeSelector->add("7x8");
+    gridSizeSelector->add("8x9");
+
+    enableAISelector = new Dropdown(x, y + 100, w, 25, "AI Player");
+    enableAISelector->add("Enabled");
+    enableAISelector->add("Disabled");
+    if (state.getEnabledAI()){
+        enableAISelector->value(0);
+    }
+    else {
+        enableAISelector->value(1);
+    }
 }
 
 void SettingsInterface::applyUpdates(){
     int newSize = 0;
-    bool shouldEnableAI = false;
+    bool shouldEnableAI;
 
+    if (gridSizeSelector->value() == 0) {
+        newSize = 6;
+    }
+    else if (gridSizeSelector->value() == 1) {
+        newSize = 7;
+    }
+    else if (gridSizeSelector->value() == 2) {
+        newSize = 8;
+    }
+
+    if (enableAISelector->value() == 0){
+        shouldEnableAI = true;
+    }
+    else if (enableAISelector->value() == 1){
+        shouldEnableAI = false;
+    }
+
+    if (newSize != state.getSize()){
+        state.enableAI();
+    }
+    else{
+        state.disableAI();
+    }
+    
 }
 
 void SettingsInterface::hide(){
     visible = false;
     pageHeading->hide();
+    gridSizeSelector->hide();
+    enableAISelector->hide();
 }
 
 void SettingsInterface::show(){
     visible = true;
     pageHeading->show();
+    gridSizeSelector->show();
+    enableAISelector->show();
 }
 
 GameState SettingsInterface::getState() const{
