@@ -99,6 +99,11 @@ Vec Agent::play(GameState state){
     Graph<GameState> gameSpace;
     gameSpace.addVertex(root);
     int zeroColumns = 0;
+    int columnsAvailable[state.getCols()];
+    
+    for(int i = 0; i < state.getCols(); i++){
+        columnsAvailable[i] = -1;
+    }
 
     Queue<GameTreeNode> frontier;
     frontier.enqueue(GameTreeNode(root, 0));
@@ -130,7 +135,9 @@ Vec Agent::play(GameState state){
 
     std::cout << reward << std::endl;
     if(reward == 0){
+        columnsAvailable[zeroColumns] = 0;
         zeroColumns++;
+        
     }
     int pos = 0;
     for (int i = 1; i < root->neighbors.size(); i++){
@@ -148,6 +155,7 @@ Vec Agent::play(GameState state){
             pos = i;
         }
         if(curr == 0){
+            columnsAvailable[zeroColumns] = i;
             zeroColumns++;
         }
     }
@@ -186,16 +194,26 @@ Vec Agent::play(GameState state){
 
     //This is primarily going to be used for the first couple of turns when the AI does not have much to respond to
     //It will choose to play closer towards the center in open columns
-    //Will only properly run when 3 or more columns return "0" also
+    //Will only properly run when 4 or more columns return "0" also, ensure only at start of game
     //In the extremely off chance that this logic will cause the AI to lose, it will just default to what it has been doing
 
-    if(zeroColumns > 2){
+    if(zeroColumns > 2 && reward == 0){
             int spotToPlay = state.getLeastFilledRow();
-            GameState root2 = GameState(state);
-            root2.forceOpponentSimulation(spotToPlay);
-            if(root2.hasWon(1) || root2.hasWon(0)){
-                //This is intentionally blank, indicating it will cause AI to lose
-            } else {
+            bool confirmZero = false;
+            for(int i = 0; i < state.getCols(); i++){
+                if(columnsAvailable[i] == spotToPlay){
+                    confirmZero = true;
+                }
+            }
+            // GameState root2 = GameState(state);
+            // root2.forceOpponentSimulation(spotToPlay);
+            // if(root2.hasWon(1) || root2.hasWon(0)){
+            //     //This is intentionally blank, indicating it will cause AI to lose
+            // } else {
+            //     pos = spotToPlay;
+            // }
+
+            if(confirmZero){
                 pos = spotToPlay;
             }
     }
