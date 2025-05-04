@@ -17,7 +17,7 @@ class GameInterface{
 
     GameState state;
 
-    ArrayList<bobcat::Button*> buttons;
+    ArrayList<ArrayList<bobcat::Button*>> buttons;
 
     bobcat::TextBox *statusBar;
 
@@ -27,7 +27,7 @@ class GameInterface{
 
     void hideButtons();
     void showButtons();
-    // void checkWinningConditions();
+    bool checkWinningConditions();
     void initButtons();
 
 public:

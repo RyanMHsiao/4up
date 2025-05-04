@@ -54,13 +54,24 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
 }
 
 void GameInterface::handleClick(Widget *sender){
-    for (int i = 0; i < buttons.size(); i++){
-        if (sender == buttons[i]){
-            // cout << "Button " << i << " was clicked" << endl;
-            state.play(i);
-            updateButtons();
-            // check winning conditions
-            return;
+    for (int i = 0; i < state.getRows(); i++){
+        for (int j = 0; j < state.getCols(); j++){
+            if (sender == buttons[i][j]){
+                
+                state.play(j);
+                updateButtons();
+                bool done = checkWinningConditions();
+
+                if (!done){
+                    if (state.getEnabledAI()){
+                        Vec move = Agent::play(state);
+                        state.play(move.x);
+                        updateButtons();
+                        checkWinningConditions();
+                    }
+                }
+                return;
+            }
         }
     }
 }
