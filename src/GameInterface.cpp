@@ -28,15 +28,19 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
     boardBackground->box(FL_FLAT_BOX);
     boardBackground->color(fl_rgb_color(0, 0, 255));
 
-    for (int i = 0; i < 7; i++){
-        int x_coord = x + i*50;
-        int y_coord = 100;
-        Button* temp = new Button(x_coord, y_coord, 40, 40, "");
-        temp->box(FL_ROUND_UP_BOX);
+    for (int i = 0; i < state.getRows(); i++){
+        ArrayList<bobcat::Button *> row;
+        for (int j = 0; j < state.getCols(); j++) {
+            int x_coord = x + i*50;
+            int y_coord = y + j*50;
+            Button* temp = new Button(x_coord, y_coord, 40, 40, "");
+            temp->box(FL_ROUND_UP_BOX);
 
-        ON_CLICK(temp, GameInterface::handleClick);
+            ON_CLICK(temp, GameInterface::handleClick);
 
-        buttons.append(temp);
+            row.append(temp);
+        }
+        buttons.append(row);
     }
 
     updateButtons();
