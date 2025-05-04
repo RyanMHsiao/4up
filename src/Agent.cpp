@@ -199,6 +199,6 @@ Vec Agent::play(GameState state){
                 pos = spotToPlay;
             }
     }
-
+    std::cout << "Should be played at" << pos << std::endl;
     return root->neighbors[pos]->location->data.getLastMove();
 }

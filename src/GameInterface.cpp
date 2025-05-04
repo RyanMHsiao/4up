@@ -25,6 +25,11 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
     boardBackground->box(FL_FLAT_BOX);
     boardBackground->color(fl_rgb_color(0, 0, 255));
 
+    Fl_Box* boardBackground;
+
+    boardBackground = new Fl_Box(x, y, w, h);
+    boardBackground->box(FL_FLAT_BOX);
+    boardBackground->color(fl_rgb_color(0, 0, 255));
 
     for (int i = 0; i < state.getRows(); i++){
         ArrayList<bobcat::Button *> row;
@@ -43,7 +48,6 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
 
     updateButtons();
 
-
     string message = "Player vs Player";
     if (state.getEnabledAI()){
         message = "Player vs AI";
@@ -56,10 +60,12 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
 }
 
 void GameInterface::handleClick(Widget *sender){
+    std::cout << "clicked!\n";
     for (int i = 0; i < state.getRows(); i++){
         for (int j = 0; j < state.getCols(); j++){
             if (sender == buttons[i][j]){
                 
+                std::cout << "clicked " << i << " " << j << "\n";
                 state.play(j);
                 updateButtons();
                 bool done = checkWinningConditions();
@@ -67,7 +73,7 @@ void GameInterface::handleClick(Widget *sender){
                 if (!done){
                     if (state.getEnabledAI()){
                         Vec move = Agent::play(state);
-                        state.play(move.x);
+                        state.play(move.y);
                         updateButtons();
                         checkWinningConditions();
                     }
@@ -103,7 +109,7 @@ void GameInterface::initButtons(){
             Button* curr = new Button(0, 0, 1, 1);
             curr->box(FL_ROUND_UP_BOX);
 
-            curr->labelsize(32);
+            curr->labelsize(20);
             ON_CLICK(curr, GameInterface::handleClick);
             row.append(curr);
         }
