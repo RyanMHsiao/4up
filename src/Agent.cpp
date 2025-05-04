@@ -89,12 +89,16 @@ int Agent::getReward(Vertex<GameState>* start, int player, int cycles){
         }
         return reward;
     }
+
+    //Incase no conditions were met
+    return 0;
 }
 
 Vec Agent::play(GameState state){
     Vertex<GameState>* root = new Vertex<GameState>(state);
     Graph<GameState> gameSpace;
     gameSpace.addVertex(root);
+    int zeroColumns = 0;
 
     Queue<GameTreeNode> frontier;
     frontier.enqueue(GameTreeNode(root, 0));
@@ -125,6 +129,9 @@ Vec Agent::play(GameState state){
     int reward = getReward(root->neighbors[0]->location, 1, cycles);
 
     std::cout << reward << std::endl;
+    if(reward == 0){
+        zeroColumns++;
+    }
     int pos = 0;
     for (int i = 1; i < root->neighbors.size(); i++){
         int curr = getReward(root->neighbors[i]->location, 1, cycles);
@@ -139,6 +146,9 @@ Vec Agent::play(GameState state){
             std::cout << "here" << std::endl;
             reward = curr;
             pos = i;
+        }
+        if(curr == 0){
+            zeroColumns++;
         }
     }
 
@@ -161,7 +171,7 @@ Vec Agent::play(GameState state){
             // Note that using count instead of an actual col value
             if(root2.hasSpace(count)){
                 root2.forceOpponentSimulation(count);
-                if(root2.hasWon(1) ||  root2.hasWon(0) && root2.hasSpace(count)){
+                if(root2.hasWon(1) ||  (root2.hasWon(0) && root2.hasSpace(count))){
                     possibleWins++;
                     std::cout << "Poss" << std::endl;
                     pos = count;
@@ -172,6 +182,13 @@ Vec Agent::play(GameState state){
         }
 
         std::cout << "Possible wins: " << possibleWins << std::endl;
+    }
+
+    //This is primarily going to be used for the first couple of turns when the AI does not have much to respond to
+    //It will choose to play closer towards the center in open columns
+    //Will only properly run when 3 or more columns return "0" also
+    if(zeroColumns > 2){
+            pos = state.getLeastFilledRow();
     }
 
     return root->neighbors[pos]->location->data.getLastMove();

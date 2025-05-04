@@ -56,6 +56,7 @@ public:
 
     bool play(int col); //play into a column, update state resulting from players move
 
+    int getLeastFilledRow() const;
     
     bool hasWon(int player) const; //has a player won?
 

@@ -157,6 +157,46 @@ int GameState::getCurrentTurn() const {
     return true;
  }
 
+ int GameState::getLeastFilledRow() const {
+
+    int pos = 0;
+    int fill = 0;
+
+    int center = numRows / 2;
+
+    for(int i = 0; i < numCols; i++){
+        int fillForRow = 0;
+        for(int j = 0; j < numRows; j++){
+            if(board[j][i] == -1){
+                fillForRow++;
+            } else {
+                j = numRows;
+            }
+        }
+        std::cout << fillForRow << "in col" << i << std::endl;
+
+        if(fillForRow > fill){
+            fill = fillForRow;
+            pos = i;
+        } else if(fillForRow == fill){
+            if(i <= center){
+                pos = i;
+            } else if(i > center){
+                int distanceCurrent = abs(pos - center);
+                int distancePotential = abs(i - center);
+
+                if(distancePotential < distanceCurrent){
+                    fill = fillForRow;
+                    pos = i;
+                }
+
+            }
+        }
+    }
+
+    return pos;
+ }
+
 
  bool GameState::gameOver() const {
     return hasWon(0) || hasWon(1) || isFull();
