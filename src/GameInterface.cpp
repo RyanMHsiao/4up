@@ -144,7 +144,7 @@ void GameInterface::updateButtons(){
     //columns
         for (int j = 0; j < state.getCols(); j++){
             std::string stateStr = state.squareState(i,j);
-            buttons[i][j]->label("");
+            buttons[i][j]->label(stateStr.c_str());
 
             if (stateStr == "red"){
                 buttons[i][j]->color(fl_rgb_color(255, 0, 0));
