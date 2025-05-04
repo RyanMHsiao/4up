@@ -17,6 +17,8 @@ class GameInterface{
     int w;
     int h;
 
+    Fl_Box* boardBackground;
+
     GameState state;
 
     ArrayList<ArrayList<bobcat::Button*>> buttons;

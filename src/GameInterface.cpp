@@ -21,9 +21,6 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
     
     state = initialState;
 
-
-    Fl_Box* boardBackground;
-
     boardBackground = new Fl_Box(x, y, w, h);
     boardBackground->box(FL_FLAT_BOX);
     boardBackground->color(fl_rgb_color(0, 0, 255));
@@ -150,11 +147,13 @@ void GameInterface::updateButtons(){
 
 void GameInterface::show() {
     statusBar->show();
+    boardBackground->show();
     showButtons();
 }
 
 void GameInterface::hide() {
     statusBar->hide();
+    boardBackground->hide();
     hideButtons();
 }
 
