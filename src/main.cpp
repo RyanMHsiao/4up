@@ -5,56 +5,15 @@
 
 using namespace std;
 
-// // Function to test GameState independently
-// void testGameStatePrinting() {
-//     cout << "=== Testing GameState Printing ===" << endl;
-    
-//     // Create a game state
-//     GameState state(6, 7);
-    
-//     // Print initial empty board
-//     cout << "Initial empty board:" << endl;
-//     cout << state << endl;
-    
-//     // Make some moves and print after each
-//     cout << "Player 0 (R) moves in column 3:" << endl;
-//     state.play(3);
-//     cout << state << endl;
-    
-//     cout << "Player 1 (Y) moves in column 3:" << endl;
-//     state.play(3);
-//     cout << state << endl;
-    
-//     cout << "Player 0 (R) moves in column 4:" << endl;
-//     state.play(4);
-//     cout << state << endl;
-    
-//     cout << "Player 1 (Y) moves in column 4:" << endl;
-//     state.play(4);
-//     cout << state << endl;
-    
-//     // Test edge cases
-//     cout << "Attempting invalid move (full column):" << endl;
-//     if (!state.play(3)) {
-//         cout << "Move failed (as expected)" << endl;
-//     }
-//     cout << state << endl;
-// }
-
- int main(){
+int main(){
 
 
-//     // The logic related to app.run is complicated and hidden to us
-//     // So we instead just use our own functions for this phase of testing
+
+    // The logic related to app.run is complicated and hidden to us
+    // So we instead just use our own functions for this phase of testing
     Application app;
 
-//     // app.runTUI(6, 7);
 
-return app.run();
-
-    // app.runTUI(6, 7);
-
-    // return app.run();
 
 
     
@@ -77,7 +36,7 @@ return app.run();
 
     
 
-//     return 0;
+
 }
 
 
@@ -293,3 +252,27 @@ return app.run();
     
 //     return 0;
 // }
+=======
+/*
+int main() {
+    try {
+        testConstructors();
+        testCopyOperations();
+        testEqualityOperator();
+        testGamePlay();
+        testWinConditions();
+        testGameStateFunctions();
+        testReset();
+        testFullGame();
+        visualizeGame();
+        
+        cout << "\n=== ALL TESTS PASSED ===" << endl;
+    } catch (const exception& e) {
+        cerr << "Test failed: " << e.what() << endl;
+        return 1;
+    }
+    
+    return 0;
+}
+*/
+
