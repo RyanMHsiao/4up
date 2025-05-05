@@ -199,6 +199,8 @@ Vec Agent::play(GameState state){
 
     if(zeroColumns > 2 && reward == 0){
             int spotToPlay = state.getLeastFilledRow();
+            
+            std::cout << "play at: " << spotToPlay << std::endl;
             bool confirmZero = false;
             for(int i = 0; i < state.getCols(); i++){
                 if(columnsAvailable[i] == spotToPlay){

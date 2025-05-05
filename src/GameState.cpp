@@ -208,7 +208,9 @@ bool GameState::play(int col){
 
     int pos = 0;
     int fill = 0;
+    int subtractAmount = 0;
 
+    //Intentional integer division if needed
     int center = numRows / 2;
 
     for(int i = 0; i < numCols; i++){
@@ -239,12 +241,14 @@ bool GameState::play(int col){
                 
                 if(distancePotential < distanceCurrent){
                     fill = fillForRow;
-                    pos = i;
+                    pos = i - subtractAmount;
                 }
 
                 std::cout << "Update" << std::endl;
 
             }
+        } else if(fillForRow == 0){
+            subtractAmount++;
         }
     }
     std::cout << "Row which is returned: " << pos << std::endl;
