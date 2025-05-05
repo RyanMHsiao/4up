@@ -40,16 +40,15 @@ SettingsInterface::SettingsInterface(int x, int y, int w, int h, GameState state
 
 void SettingsInterface::applyUpdates(){
     int newSize = 0;
-    // bool shouldEnableAI;
 
     if (gridSizeSelector->value() == 0) {
-        // ;
+        state.resize(6, 7);
     }
     else if (gridSizeSelector->value() == 1) {
-        newSize = 7;
+        state.resize(7, 8);
     }
     else if (gridSizeSelector->value() == 2) {
-        newSize = 8;
+        state.resize(8, 9);
     }
 
     if (enableAISelector->value() == 0){
