@@ -17,6 +17,8 @@ class GameInterface{
     int w;
     int h;
 
+    bool firstInit;
+
     Fl_Box* boardBackground;
 
     GameState state;
@@ -42,6 +44,7 @@ public:
     void reset();
     void hide();
     void show();
+
     void resizeButtons();
 
     GameState getState() const;

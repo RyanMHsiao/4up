@@ -17,6 +17,8 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
     this->y = y;
     this->w = w;
     this->h = h;
+
+    firstInit = true;
     
     
     state = initialState;
@@ -106,7 +108,9 @@ void GameInterface::initButtons(){
             curr->box(FL_ROUND_UP_BOX);
             std::cout << "2\n";
 
-            //curr->labelsize(32);
+            if (firstInit) {
+                curr->labelsize(32);
+            }
             std::cout << "3\n";
             ON_CLICK(curr, GameInterface::handleClick);
             std::cout << "4\n";
@@ -115,6 +119,7 @@ void GameInterface::initButtons(){
         }
         buttons.append(row); 
     }
+    firstInit = false;
 }
 
 void GameInterface::resizeButtons() {
