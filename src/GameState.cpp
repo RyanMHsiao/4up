@@ -284,7 +284,9 @@ void GameState:: resize(int newRows, int newCols){
     }
 
     //Reset game state
-    reset();
+    // reset(); 
+    // extra comment
+    
 }
 
 void GameState::reset(){
@@ -313,7 +315,7 @@ bool GameState::getEnabledAI() const{
 }
 
 std::string GameState::squareState(int row, int col) const {
-    int state = buttonState(row, col); //Reuse buttonState's bounds checking
+     int state = buttonState(row, col); //Reuse buttonState's bounds checking
 
     if (state == -1){
         if(row < 0 || row >= numRows || col < 0 || col >= numCols){
