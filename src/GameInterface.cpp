@@ -43,14 +43,6 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
 
     updateButtons();
 
-
-    string message = "Player vs Player";
-    if (state.getEnabledAI()){
-        message = "Player vs AI";
-    }
-
-    statusBar = new TextBox(x, h-25 + y, w, 25, message);
-
     initButtons(); 
     showButtons();
 }
@@ -144,7 +136,7 @@ void GameInterface::updateButtons(){
     //columns
         for (int j = 0; j < state.getCols(); j++){
             std::string stateStr = state.squareState(i,j);
-            buttons[i][j]->label(stateStr.c_str());
+            buttons[i][j]->label("");
 
             if (stateStr == "red"){
                 buttons[i][j]->color(fl_rgb_color(255, 0, 0));
