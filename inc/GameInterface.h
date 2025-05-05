@@ -34,6 +34,7 @@ class GameInterface{
     bool checkWinningConditions();
     void initButtons();
 
+
 public:
 
     GameInterface(int x, int y, int w, int h, GameState initialState);
@@ -41,6 +42,7 @@ public:
     void reset();
     void hide();
     void show();
+    void resizeButtons();
 
     GameState getState() const;
     void setState(GameState state);

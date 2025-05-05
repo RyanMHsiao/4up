@@ -100,15 +100,35 @@ void GameInterface::initButtons(){
     for (int i = 0; i < state.getRows(); i++){
         ArrayList<Button*> row;
         for (int j = 0; j < state.getCols(); j++){
+            std::cout << "initializing button " << i << ' ' << j << '\n';
             Button* curr = new Button(0, 0, 1, 1);
+            std::cout << "1\n";
             curr->box(FL_ROUND_UP_BOX);
+            std::cout << "2\n";
 
-            curr->labelsize(32);
+            //curr->labelsize(32);
+            std::cout << "3\n";
             ON_CLICK(curr, GameInterface::handleClick);
+            std::cout << "4\n";
             row.append(curr);
+            std::cout << "5\n";
         }
         buttons.append(row); 
     }
+}
+
+void GameInterface::resizeButtons() {
+    std::cout << "Resizing buttons\n";
+    for (int i = buttons.size() - 1; i >= 0; --i) {
+        for (int j = buttons[i].size() - 1; j >= 0; --j) {
+            std::cout << "Deleting button " << i << ' ' << j << '\n';
+            delete buttons[i][j];
+        }
+        buttons.removeLast();
+    }
+    std::cout << "initializing buttons\n";
+    initButtons();
+    std::cout << "finished initializing buttons\n";
 }
 
 void GameInterface::showButtons(){
@@ -120,6 +140,10 @@ void GameInterface::showButtons(){
         int btnY = y + btnH * i;
         for (int j = 0; j < state.getCols(); j++){
             int btnX = x + btnW * j;
+
+            // The cause of the crash is here.
+            // The i and j are out of bounds for buttons.
+            std::cout << "Showing button " << i << " " << j << "\n";
 
             buttons[i][j]->resize(btnX, btnY, btnW, btnH);
             // buttons[i][j]->label(state.squareState(i, j));

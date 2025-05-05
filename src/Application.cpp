@@ -115,6 +115,7 @@ void Application::handleApplyBtnClick(Widget* sender){
     applyButton->hide();
     cancelButton->hide();
 
+    gameInterface->resizeButtons();
     gameInterface->show();
 }
 
