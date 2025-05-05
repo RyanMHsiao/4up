@@ -284,7 +284,7 @@ void GameState:: resize(int newRows, int newCols){
     }
 
     //Reset game state
-    reset();
+    // reset();
 }
 
 void GameState::reset(){
@@ -313,7 +313,7 @@ bool GameState::getEnabledAI() const{
 }
 
 std::string GameState::squareState(int row, int col) const {
-    int state = buttonState(row, col); //Reuse buttonState's bounds checking
+     int state = buttonState(row, col); //Reuse buttonState's bounds checking
 
     if (state == -1){
         if(row < 0 || row >= numRows || col < 0 || col >= numCols){
@@ -321,7 +321,7 @@ std::string GameState::squareState(int row, int col) const {
         }
         return "empty"; //position is valid but empty
     }
-    return (state== 0)? "Red ": "Yellow";  //player 0 is red, player 1 is yellow   
+    return(state == 0) ? "red" : "yellow"; //player 0 is red, player 1 is yellow   
 }
 
 char GameState::squareStateChar(int row, int col) const {
@@ -333,7 +333,7 @@ char GameState::squareStateChar(int row, int col) const {
         }
         return '.'; //empty position
     }
-    return  ' '; //return space for occupied position (color will be shown instead)
+    return (state == 0) ? 'R' : 'Y'; //player 0 is R and, player 1 is y
     
 }
 
