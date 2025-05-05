@@ -205,6 +205,8 @@ Vec Agent::play(GameState state){
                     confirmZero = true;
                 }
             }
+
+            std::cout << "Columns which return 0" << state.getCols() << std::endl;
             // GameState root2 = GameState(state);
             // root2.forceOpponentSimulation(spotToPlay);
             // if(root2.hasWon(1) || root2.hasWon(0)){

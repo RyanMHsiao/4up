@@ -229,18 +229,25 @@ bool GameState::play(int col){
             if(i <= center){
                 pos = i;
             } else if(i > center){
+                std::cout << "Greater than center" << std::endl;
                 int distanceCurrent = abs(pos - center);
                 int distancePotential = abs(i - center);
 
+                std::cout << "Current distance" << distanceCurrent << std::endl;
+                std::cout << "Potential new distance" << distancePotential << std::endl;
+
+                
                 if(distancePotential < distanceCurrent){
                     fill = fillForRow;
                     pos = i;
                 }
 
+                std::cout << "Update" << std::endl;
+
             }
         }
     }
-
+    std::cout << "Row which is returned: " << pos << std::endl;
     return pos;
  }
 
