@@ -17,8 +17,6 @@ class GameInterface{
     int w;
     int h;
 
-    bool firstInit;
-
     Fl_Box* boardBackground;
 
     GameState state;

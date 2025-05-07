@@ -12,13 +12,15 @@
 using namespace std;
 using namespace bobcat;
 
+// We must always initialize with max size and just hide unused buttons
+// This is a bobcat-ui limitation and a Kyrilov-approved solution
+const int MAX_ROWS = 8, MAX_COLS = 9;
+
 GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState){
     this->x = x;
     this->y = y;
     this->w = w;
     this->h = h;
-
-    firstInit = true;
     
     
     state = initialState;
@@ -28,9 +30,9 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
     boardBackground->color(fl_rgb_color(0, 0, 255));
 
 
-    for (int i = 0; i < state.getRows(); i++){
+    for (int i = 0; i < MAX_ROWS; i++){
         ArrayList<bobcat::Button *> row;
-        for (int j = 0; j < state.getCols(); j++) {
+        for (int j = 0; j < MAX_COLS; j++) {
             int x_coord = x + i*50;
             int y_coord = y + j*50;
             Button* temp = new Button(x_coord, y_coord, 40, 40, "");
@@ -99,41 +101,22 @@ bool GameInterface::checkWinningConditions(){
 
 void GameInterface::initButtons(){
 
-    for (int i = 0; i < state.getRows(); i++){
+    for (int i = 0; i < MAX_ROWS; i++){
         ArrayList<Button*> row;
-        for (int j = 0; j < state.getCols(); j++){
-            std::cout << "initializing button " << i << ' ' << j << '\n';
+        for (int j = 0; j < MAX_COLS; j++){
             Button* curr = new Button(0, 0, 1, 1);
-            std::cout << "1\n";
             curr->box(FL_ROUND_UP_BOX);
-            std::cout << "2\n";
 
-            if (firstInit) {
-                curr->labelsize(32);
-            }
-            std::cout << "3\n";
+            curr->labelsize(32);
             ON_CLICK(curr, GameInterface::handleClick);
-            std::cout << "4\n";
             row.append(curr);
-            std::cout << "5\n";
         }
         buttons.append(row); 
     }
-    firstInit = false;
 }
 
 void GameInterface::resizeButtons() {
     std::cout << "Resizing buttons\n";
-    for (int i = buttons.size() - 1; i >= 0; --i) {
-        for (int j = buttons[i].size() - 1; j >= 0; --j) {
-            std::cout << "Deleting button " << i << ' ' << j << '\n';
-            delete buttons[i][j];
-        }
-        buttons.removeLast();
-    }
-    std::cout << "initializing buttons\n";
-    initButtons();
-    std::cout << "finished initializing buttons\n";
 }
 
 void GameInterface::showButtons(){
@@ -149,6 +132,7 @@ void GameInterface::showButtons(){
             // The cause of the crash is here.
             // The i and j are out of bounds for buttons.
             std::cout << "Showing button " << i << " " << j << "\n";
+            std::cout << buttons[i].size() << " is size\n";
 
             buttons[i][j]->resize(btnX, btnY, btnW, btnH);
             // buttons[i][j]->label(state.squareState(i, j));
