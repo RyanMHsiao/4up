@@ -121,6 +121,7 @@ void Application::handleApplyBtnClick(Widget* sender){
 
     gameInterface->resizeButtons();
     gameInterface->show();
+    gameInterface->updateButtons();
 }
 
 void Application::handleTwoPlayersClick(Widget *sender){

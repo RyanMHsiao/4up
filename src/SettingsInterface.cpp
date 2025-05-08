@@ -41,6 +41,8 @@ SettingsInterface::SettingsInterface(int x, int y, int w, int h, GameState state
 void SettingsInterface::applyUpdates(){
     int newSize = 0;
 
+    state.reset();
+
     if (gridSizeSelector->value() == 0) {
         state.resize(6, 7);
     }
