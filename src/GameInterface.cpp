@@ -153,18 +153,20 @@ void GameInterface::updateButtons(){
                 buttons[i][j]->color(fl_rgb_color(250, 250, 250));
                 buttons[i][j]->color2(fl_rgb_color(250, 250, 250));
             }
+            buttons[i][j]->redraw();
         }
     }
 }
 
 void GameInterface::show() {
-    statusBar->show();
+    // statusBar->show();
     boardBackground->show();
+    updateButtons();
     showButtons();
 }
 
 void GameInterface::hide() {
-    statusBar->hide();
+    // statusBar->hide();
     boardBackground->hide();
     hideButtons();
 }
@@ -184,5 +186,5 @@ void GameInterface::setState(GameState state){
     if (state.getEnabledAI()){
         message = "Player vs AI";
     }
-    statusBar->label(message);
+    // statusBar->label(message);
 }
