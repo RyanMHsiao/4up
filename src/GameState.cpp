@@ -242,12 +242,13 @@ bool GameState::play(int col){
                 if(distancePotential < distanceCurrent){
                     fill = fillForRow;
                     pos = i - subtractAmount;
+                    std::cout << "Update, removing" << subtractAmount << " from " << i << std::endl;
                 }
 
-                std::cout << "Update" << std::endl;
 
             }
-        } else if(fillForRow == 0){
+        } 
+        if(fillForRow == 0){
             subtractAmount++;
         }
     }
