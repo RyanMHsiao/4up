@@ -56,6 +56,8 @@ public:
     Application();
     
     void runTUI(int rows, int cols);
+    // Call in main to prevent weird graphical bug
+    void prepareGraphics();
 };
 
 #endif

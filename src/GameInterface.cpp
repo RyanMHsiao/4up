@@ -45,7 +45,7 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
         buttons.append(row);
     }
 
-    updateButtons();
+    // updateButtons();
 
 
     string message = "Player vs Player";
@@ -55,8 +55,7 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
 
     statusBar = new TextBox(x, h-25 + y, w, 25, message);
 
-    initButtons(); 
-    showButtons();
+    show();
 }
 
 void GameInterface::handleClick(Widget *sender){
@@ -100,19 +99,7 @@ bool GameInterface::checkWinningConditions(){
 }
 
 void GameInterface::initButtons(){
-
-    for (int i = 0; i < MAX_ROWS; i++){
-        ArrayList<Button*> row;
-        for (int j = 0; j < MAX_COLS; j++){
-            Button* curr = new Button(0, 0, 1, 1);
-            curr->box(FL_ROUND_UP_BOX);
-
-            curr->labelsize(32);
-            ON_CLICK(curr, GameInterface::handleClick);
-            row.append(curr);
-        }
-        buttons.append(row); 
-    }
+    std::cout << "Init buttons\n";
 }
 
 void GameInterface::resizeButtons() {
@@ -131,8 +118,6 @@ void GameInterface::showButtons(){
 
             // The cause of the crash is here.
             // The i and j are out of bounds for buttons.
-            std::cout << "Showing button " << i << " " << j << "\n";
-            std::cout << buttons[i].size() << " is size\n";
 
             buttons[i][j]->resize(btnX, btnY, btnW, btnH);
             // buttons[i][j]->label(state.squareState(i, j));

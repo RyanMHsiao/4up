@@ -51,7 +51,11 @@ Application::Application(){
 
     twoPlayersButton->show();
     AIButton->show();
+}
 
+void Application::prepareGraphics() {
+    // handleSettingsMenuClick(nullptr);
+    gameInterface->updateButtons();
 }
 
 void Application::runTUI(int rows, int cols) {
