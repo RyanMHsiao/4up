@@ -47,7 +47,6 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
 
     // updateButtons();
 
-
     string message = "Player vs Player";
     if (state.getEnabledAI()){
         message = "Player vs AI";
@@ -142,7 +141,7 @@ void GameInterface::updateButtons(){
     //columns
         for (int j = 0; j < MAX_COLS; j++){
             std::string stateStr = state.squareState(i,j);
-            buttons[i][j]->label(stateStr.c_str());
+            buttons[i][j]->label("");
 
             if (i >= state.getRows() || j >= state.getCols()) {
                 buttons[i][j]->hide();
