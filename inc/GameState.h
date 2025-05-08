@@ -73,6 +73,7 @@ public:
     void disableAI();
     bool getEnabledAI() const;
     // is the AI on?
+    void resize(int newRows, int newCols);
 
     int getCurrentTurn() const; //whose turn?
     int getSize() const; //what is the size of the game

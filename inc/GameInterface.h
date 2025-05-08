@@ -25,14 +25,13 @@ class GameInterface{
 
     bobcat::TextBox *statusBar;
 
-    void updateButtons();
-
     void handleClick(bobcat::Widget *sender);
 
     void hideButtons();
     void showButtons();
     bool checkWinningConditions();
     void initButtons();
+
 
 public:
 
@@ -41,6 +40,11 @@ public:
     void reset();
     void hide();
     void show();
+
+    void resizeButtons();
+
+    // Need to be public so we can use it to fix weirdness
+    void updateButtons();
 
     GameState getState() const;
     void setState(GameState state);
