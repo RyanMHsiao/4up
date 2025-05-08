@@ -45,15 +45,6 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
         buttons.append(row);
     }
 
-    // updateButtons();
-
-    string message = "Player vs Player";
-    if (state.getEnabledAI()){
-        message = "Player vs AI";
-    }
-
-    statusBar = new TextBox(x, h-25 + y, w, 25, message);
-
     show();
 }
 
@@ -61,17 +52,18 @@ void GameInterface::handleClick(Widget *sender){
     for (int i = 0; i < state.getRows(); i++){
         for (int j = 0; j < state.getCols(); j++){
             if (sender == buttons[i][j]){
-                
-                state.play(j);
-                updateButtons();
-                bool done = checkWinningConditions();
+                if (state.hasSpace(j)){
+                    state.play(j);
+                    updateButtons();
+                    bool done = checkWinningConditions();
 
-                if (!done){
-                    if (state.getEnabledAI()){
-                        Vec move = Agent::play(state);
-                        state.play(move.y);
-                        updateButtons();
-                        checkWinningConditions();
+                    if (!done){
+                        if (state.getEnabledAI()){
+                            Vec move = Agent::play(state);
+                            state.play(move.y);
+                            updateButtons();
+                            checkWinningConditions();
+                        }
                     }
                 }
                 return;
