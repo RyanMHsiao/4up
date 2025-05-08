@@ -45,15 +45,6 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
         buttons.append(row);
     }
 
-    // updateButtons();
-
-    string message = "Player vs Player";
-    if (state.getEnabledAI()){
-        message = "Player vs AI";
-    }
-
-    statusBar = new TextBox(x, h-25 + y, w, 25, message);
-
     show();
 }
 
