@@ -51,7 +51,11 @@ Application::Application(){
 
     twoPlayersButton->show();
     AIButton->show();
+}
 
+void Application::prepareGraphics() {
+    // handleSettingsMenuClick(nullptr);
+    gameInterface->updateButtons();
 }
 
 void Application::runTUI(int rows, int cols) {
@@ -115,7 +119,9 @@ void Application::handleApplyBtnClick(Widget* sender){
     applyButton->hide();
     cancelButton->hide();
 
+    gameInterface->resizeButtons();
     gameInterface->show();
+    gameInterface->updateButtons();
 }
 
 void Application::handleTwoPlayersClick(Widget *sender){
