@@ -138,13 +138,17 @@ void GameInterface::hideButtons(){
 
 void GameInterface::updateButtons(){
     //rows
-    for(int i = 0; i < state.getRows(); i++){
+    for(int i = 0; i < MAX_ROWS; i++){
     //columns
-        for (int j = 0; j < state.getCols(); j++){
+        for (int j = 0; j < MAX_COLS; j++){
             std::string stateStr = state.squareState(i,j);
             buttons[i][j]->label(stateStr.c_str());
 
-            if (stateStr == "red"){
+            if (i >= state.getRows() || j >= state.getCols()) {
+                buttons[i][j]->hide();
+            }
+
+            else if (stateStr == "red"){
                 buttons[i][j]->color(fl_rgb_color(255, 0, 0));
                 buttons[i][j]->color2(fl_rgb_color(255, 0, 0));
             }
