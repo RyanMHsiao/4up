@@ -57,6 +57,9 @@ public:
     GameState& operator=(const GameState& other);
 
     bool play(int col); //play into a column, update state resulting from players move
+
+    int getLeastFilledRow() const;
+    
     bool hasWon(int player) const; //has a player won?
     bool gameOver() const; //is the game over?
     //is the board completely filled
@@ -89,6 +92,10 @@ public:
     std::string squareState(int row, int col) const;
     char squareStateChar(int row, int col) const;
 
+    // int getElapsedTurns() const;
+
+    // Messes up the state. Do not use this outside of agent.
+    void forceOpponentSimulation(int col);
 
     friend std::ostream& operator<<(std::ostream& os, const GameState& state);
 };

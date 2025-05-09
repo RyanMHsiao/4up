@@ -45,10 +45,20 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
         buttons.append(row);
     }
 
+    // updateButtons();
+
+    string message = "Player vs Player";
+    if (state.getEnabledAI()){
+        message = "Player vs AI";
+    }
+
+    statusBar = new TextBox(x, h-3 + y, w, 25, message);
+
     show();
 }
 
 void GameInterface::handleClick(Widget *sender){
+    //std::cout << "clicked!\n";
     for (int i = 0; i < state.getRows(); i++){
         for (int j = 0; j < state.getCols(); j++){
             if (sender == buttons[i][j]){

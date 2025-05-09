@@ -207,6 +207,59 @@ bool GameState::play(int col){
     return true;
  }
 
+ int GameState::getLeastFilledRow() const {
+    
+    int pos = 0;
+    int fill = 0;
+    int subtractAmount = 0;
+
+    //Intentional integer division if needed
+    int center = numRows / 2;
+
+    for(int i = 0; i < numCols; i++){
+        int fillForRow = 0;
+        for(int j = 0; j < numRows; j++){
+            if(board[j][i] == -1){
+                fillForRow++;
+            } else {
+                j = numRows;
+            }
+        }
+        //std::cout << fillForRow << "in col" << i << std::endl;
+
+        if(fillForRow > fill){
+            fill = fillForRow;
+            pos = i;
+        } else if(fillForRow == fill){
+            if(i <= center){
+                pos = i;
+            } else if(i > center){
+                //std::cout << "Greater than center" << std::endl;
+                int distanceCurrent = abs(pos - center);
+                int distancePotential = abs(i - center);
+
+                //std::cout << "Current distance" << distanceCurrent << std::endl;
+                //std::cout << "Potential new distance" << distancePotential << std::endl;
+
+                
+                if(distancePotential < distanceCurrent){
+                    fill = fillForRow;
+                    pos = i - subtractAmount;
+                    //std::cout << "Update, removing" << subtractAmount << " from " << i << std::endl;
+                }
+
+
+            }
+        } 
+        if(fillForRow == 0){
+            subtractAmount++;
+        }
+    }
+    //std::cout << "Row which is returned: " << pos << std::endl;
+    return pos;
+ }
+
+
  bool GameState::gameOver() const {
     return hasWon(0) || hasWon(1) || isFull();
  }
@@ -342,7 +395,7 @@ char GameState::squareStateChar(int row, int col) const {
     
 }
 
-
-
-
-
+void GameState::forceOpponentSimulation(int col) {
+    currentTurn = !currentTurn;
+    play(col);
+}
