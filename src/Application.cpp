@@ -3,7 +3,7 @@
 #include <bobcat_ui/bobcat_ui.h>
 #include <bobcat_ui/button.h>
 #include <cstdlib>
-#include <type_traits>
+// #include <type_traits>
 #include "Agent.h"
 
 using namespace bobcat;
@@ -13,7 +13,7 @@ Application::Application(){
 
     window = new Window(100, 100, 400, 400, "Connect4");
 
-    state = GameState();
+    // state = GameState();
     state.enableAI();
 
     gameInterface = new GameInterface(30, 35, 340, 340, state);
@@ -40,7 +40,9 @@ Application::Application(){
     ON_CLICK(cancelButton, Application::handleCancelBtnClick);
     ON_CLICK(applyButton, Application::handleApplyBtnClick);
 
+    // window->redraw();
     window->show();
+    // window->redraw();
 
     
     twoPlayersButton = new Button(30, 35, 155, 25, "Player vs Player");

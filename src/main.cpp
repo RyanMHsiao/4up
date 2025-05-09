@@ -12,7 +12,7 @@ int main(){
     // The logic related to app.run is complicated and hidden to us
     // So we instead just use our own functions for this phase of testing
     Application app;
-    app.prepareGraphics();
+    // app.prepareGraphics();
     return app.run();
 
 
