@@ -11,6 +11,8 @@ The GameState itself is mostly original code written by us, representing the boa
 The GameInterface and SettingsInterface code are based on the code from lecture 24, with changes made to reflect the different GameState object that we have implemented. 
 
 The AI works similarly to the original tic-tac-toe AI explained in lecture, but we had to make it more advanced because it is very computationally expensive to test all the possible choices in this game. Our AI tries to make lines of pieces and tries to prevent the human player from winning.
+
+We reduced the depth for the AI very late in the project because we decided that the performance was unreasonably slow. If you want to play against a slower and more competent AI, try increasing the limit on Agent.cpp line 110 to 6.
 ## List of contributions by member
 Freysell wrote most of the GameState code, including both the basic methods for changing the state and more complicated methods to help assess the game state.
 

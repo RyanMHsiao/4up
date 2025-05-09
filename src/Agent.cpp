@@ -107,7 +107,7 @@ Vec Agent::play(GameState state){
 
     Queue<GameTreeNode> frontier;
     frontier.enqueue(GameTreeNode(root, 0));
-    int limit = 6;
+    int limit = 4;
     while (!frontier.isEmpty()){
         GameTreeNode gtn = frontier.dequeue();
         Vertex<GameState>* node = gtn.vertex;
