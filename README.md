@@ -12,7 +12,7 @@ The GameInterface and SettingsInterface code are based on the code from lecture 
 
 The AI works similarly to the original tic-tac-toe AI explained in lecture, but we had to make it more advanced because it is very computationally expensive to test all the possible choices in this game. Our AI tries to make lines of pieces and tries to prevent the human player from winning. It also uses a heuristic in order to try and make moves that take more control of the board, which does not exactly follow mini-max but was approved.
 
-We reduced the depth for the AI very late in the project because we decided that the performance was unreasonably slow. If you want to play against a slower and more competent AI, try increasing the limit on Agent.cpp line 110 to 6.
+We reduced the depth for the AI very late in the project because we decided that the performance was unreasonably slow. If you want to play against a more competent, albeit slower AI, try increasing the limit on `Agent.cpp` line 110 to 6.
 ## List of contributions by member
 Freysell - Wrote most of the GameState code, including both the basic methods for changing the state and more complicated methods to help assess the game state. Wrote code to test that our implementation of the game works as expected. Added more functions to GameState as needed by the rest of the team. Verified that the GameState would be deeply copied properly without causing any unintended behavior.
 
