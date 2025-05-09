@@ -2,22 +2,22 @@
 ## Rules
 Our game has the same rules as the original game of Connect 4. Players take turns choosing columns to put game pieces into. Pieces fall into the lowest unoccupied space in the column, and each column has a limit to the number of pieces it can contain. The first player to have 4 consecutive pieces of their color in a horizontal, vertical, or diagonal line wins. If all the spaces are filled without either player winning, the game ends in a tie.
 ## Interface description
-To open the settings menu, press the file button in the top left and select settings. Choose the settings you want, and press apply. Then press the file button again and select new game.
+Upon running our program, you will see a new game with 6 rows and 7 columns playing against the AI. You can start play by clicking on any space. Clicking on a space will drop a piece of your color into that column. When playing against the AI, the AI will think for a few seconds and then respond. If you try to play in a column that is already full, nothing will happen. You can take turns placing pieces until either someone wins or the game ends upon a tie. After the game, a dialog will appear to give you the option to start again.
 
-To play the game, simply click on a space in the column you would like to play in. The AI will automatically respond to your move, and you can play until somebody wins or there are no possible moves remaining. When the game ends, a dialog will show up giving you the option to reset the game. If you try to put a piece in a column with no room, nothing will happen.
+You can change the settings of the game using the settings menu. To open the settings menu, press the file button in the top left and select settings. Choose the settings you want from the drop-downs, and press apply. This will start a new game with your chosen settings.
 ## Important implementation details
 The GameState itself is mostly original code written by us, representing the board as a 2D array of `int`s. We put a heavy emphasis on using functions to abstract the details from our GameState away and make it easy to change the exact implementation details if needed.
 
-The GameInterface and SettingsInterface code are based on the code from lecture 24, with changes made to reflect the different GameState object that we have implemented. 
+The GameInterface and SettingsInterface code are based on the code from lecture 24, with changes made to reflect the different GameState object that we have implemented. To get around a bobcat-ui crash, we initialized the buttons for the maximum possible size and simply hide them when playing on smaller board sizes.
 
-The AI works similarly to the original tic-tac-toe AI explained in lecture, but we had to make it more advanced because it is very computationally expensive to test all the possible choices in this game. Our AI tries to make lines of pieces and tries to prevent the human player from winning.
+The AI works similarly to the original tic-tac-toe AI explained in lecture, but we had to make it more advanced because it is very computationally expensive to test all the possible choices in this game. Our AI tries to make lines of pieces and tries to prevent the human player from winning. It also uses a heuristic in order to try and make moves that take more control of the board, which does not exactly follow mini-max but was approved.
 
 We reduced the depth for the AI very late in the project because we decided that the performance was unreasonably slow. If you want to play against a slower and more competent AI, try increasing the limit on Agent.cpp line 110 to 6.
 ## List of contributions by member
-Freysell wrote most of the GameState code, including both the basic methods for changing the state and more complicated methods to help assess the game state.
+Freysell - Wrote most of the GameState code, including both the basic methods for changing the state and more complicated methods to help assess the game state. Wrote code to test that our implementation of the game works as expected. Added more functions to GameState as needed by the rest of the team. Verified that the GameState would be deeply copied properly without causing any unintended behavior.
 
-Alexia adapted the code for the interfaces to work with our project, solving some problems we ran into with the visuals not updating as expected.
+Alexia - Adapted the code for the interfaces to work with our project, solving some problems we ran into with the visuals not updating as expected. Changed to visuals to better fit our project and fixed some bugs introduced by the GUI. Implemented changing the size of the board and the required objects for changing the size and opponent options. Made the game interface responsive for the chosen size of the game board.
 
-Sathya wrote the code for the AI, writing code to evaluate the position and respond properly to threats.
+Sathya - Worked on implementing the agent such that it correctly tracks the score. Improved the AI by keeping track how many turns the game was from either a win or loss in order to either delay a loss or expedite a win. Added a heuristic function to break ties when multiple columns theoretically result in a draw. The function's purpose is to gravitate towards columns which are less filled and towards the center, which results in a more competent AI compared to one that chooses the first possible move or arbitrary moves.
 
-Ryan organized the project, writing plans for the game features and resolving issues related to git.
+Ryan - Worked on organizing the project, writing plans on how to implement features. Taught everyone how to use git and dealt with problems like merge conflicts and compile errors from messed up merges. Dealt with problems related to bobcat-ui, most notably rewriting logic in order to initialize with the maximum board size to prevent bobcat-ui related crash. Also kept track of all the goals we needed to fulfill for the project.
