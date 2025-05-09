@@ -208,7 +208,7 @@ bool GameState::play(int col){
  }
 
  int GameState::getLeastFilledRow() const {
-
+    
     int pos = 0;
     int fill = 0;
     int subtractAmount = 0;
@@ -225,7 +225,7 @@ bool GameState::play(int col){
                 j = numRows;
             }
         }
-        std::cout << fillForRow << "in col" << i << std::endl;
+        //std::cout << fillForRow << "in col" << i << std::endl;
 
         if(fillForRow > fill){
             fill = fillForRow;
@@ -234,18 +234,18 @@ bool GameState::play(int col){
             if(i <= center){
                 pos = i;
             } else if(i > center){
-                std::cout << "Greater than center" << std::endl;
+                //std::cout << "Greater than center" << std::endl;
                 int distanceCurrent = abs(pos - center);
                 int distancePotential = abs(i - center);
 
-                std::cout << "Current distance" << distanceCurrent << std::endl;
-                std::cout << "Potential new distance" << distancePotential << std::endl;
+                //std::cout << "Current distance" << distanceCurrent << std::endl;
+                //std::cout << "Potential new distance" << distancePotential << std::endl;
 
                 
                 if(distancePotential < distanceCurrent){
                     fill = fillForRow;
                     pos = i - subtractAmount;
-                    std::cout << "Update, removing" << subtractAmount << " from " << i << std::endl;
+                    //std::cout << "Update, removing" << subtractAmount << " from " << i << std::endl;
                 }
 
 
@@ -255,7 +255,7 @@ bool GameState::play(int col){
             subtractAmount++;
         }
     }
-    std::cout << "Row which is returned: " << pos << std::endl;
+    //std::cout << "Row which is returned: " << pos << std::endl;
     return pos;
  }
 

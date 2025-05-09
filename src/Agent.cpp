@@ -133,7 +133,7 @@ Vec Agent::play(GameState state){
     int cycles = limit;
     int reward = getReward(root->neighbors[0]->location, 1, cycles);
 
-    std::cout << reward << std::endl;
+    //std::cout << reward << std::endl;
     if(reward == 0){
         columnsAvailable[zeroColumns] = 0;
         zeroColumns++;
@@ -142,15 +142,15 @@ Vec Agent::play(GameState state){
     int pos = 0;
     for (int i = 1; i < root->neighbors.size(); i++){
         int curr = getReward(root->neighbors[i]->location, 1, cycles);
-        std::cout << curr << std::endl;
+        //std::cout << curr << std::endl;
         if (curr > reward){
-            std::cout << "better option at " << i << std::endl;
+            //std::cout << "better option at " << i << std::endl;
             reward = curr;
             pos = i;
         }
         else if (curr == reward && root->neighbors[i]->location->data.hasWon(1)){
             //Identified something can be inputted here to prolong the game
-            std::cout << "here" << std::endl;
+            //std::cout << "here" << std::endl;
             reward = curr;
             pos = i;
         }
@@ -161,14 +161,14 @@ Vec Agent::play(GameState state){
     }
 
     if(reward <= -100){
-        std::cout << "Always lose from here" << reward << std::endl;
+        //std::cout << "Always lose from here" << reward << std::endl;
         // pos = oneOff();
     }
 
     if(reward == -100 * (limit - 1)){
         //This is to see if there is multiple win scenarios for human, and will try blocking one of them at least to be less stupid
         int possibleWins = 0;
-        std::cout << "size: " << root->neighbors.size() << std::endl;
+        //std::cout << "size: " << root->neighbors.size() << std::endl;
         // Vertex<GameState>* root2 = new Vertex<GameState>(state);
         // root2.play(0);
 
@@ -181,7 +181,7 @@ Vec Agent::play(GameState state){
                 root2.forceOpponentSimulation(count);
                 if(root2.hasWon(1) ||  (root2.hasWon(0) && root2.hasSpace(count))){
                     possibleWins++;
-                    std::cout << "Poss" << std::endl;
+                    //std::cout << "Poss" << std::endl;
                     pos = count;
                 }
 
@@ -189,7 +189,7 @@ Vec Agent::play(GameState state){
 
         }
 
-        std::cout << "Possible wins: " << possibleWins << std::endl;
+        //std::cout << "Possible wins: " << possibleWins << std::endl;
     }
 
     //This is primarily going to be used for the first couple of turns when the AI does not have much to respond to
@@ -200,7 +200,7 @@ Vec Agent::play(GameState state){
     if(zeroColumns > 2 && reward == 0){
             int spotToPlay = state.getLeastFilledRow();
             
-            std::cout << "play at: " << spotToPlay << std::endl;
+            //std::cout << "play at: " << spotToPlay << std::endl;
             bool confirmZero = false;
             for(int i = 0; i < state.getCols(); i++){
                 if(columnsAvailable[i] == spotToPlay){
@@ -208,7 +208,7 @@ Vec Agent::play(GameState state){
                 }
             }
 
-            std::cout << "Columns which return 0" << state.getCols() << std::endl;
+            //std::cout << "Columns which return 0" << state.getCols() << std::endl;
             // GameState root2 = GameState(state);
             // root2.forceOpponentSimulation(spotToPlay);
             // if(root2.hasWon(1) || root2.hasWon(0)){
@@ -221,7 +221,7 @@ Vec Agent::play(GameState state){
                 pos = spotToPlay;
             }
     }
-    std::cout << "Should be played at" << pos << std::endl;
+    //std::cout << "Should be played at" << pos << std::endl;
 
     //Incase there is a random index out of bounds occured as a result of the logic, will default to playing in left most column
     if(pos >= root->neighbors.size()){
