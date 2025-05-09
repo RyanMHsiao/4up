@@ -45,7 +45,6 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
         buttons.append(row);
     }
 
-<<<<<<< HEAD
     // updateButtons();
 
     string message = "Player vs Player";
@@ -55,8 +54,6 @@ GameInterface::GameInterface(int x, int y, int w, int h, GameState initialState)
 
     statusBar = new TextBox(x, h-3 + y, w, 25, message);
 
-=======
->>>>>>> 5740def80fe5890f6d69a98021679d1cc775a84f
     show();
 }
 
@@ -65,19 +62,10 @@ void GameInterface::handleClick(Widget *sender){
     for (int i = 0; i < state.getRows(); i++){
         for (int j = 0; j < state.getCols(); j++){
             if (sender == buttons[i][j]){
-<<<<<<< HEAD
-                
-                std::cout << "clicked " << i << " " << j << "\n";
-                
-                state.play(j);
-                updateButtons();
-                bool done = checkWinningConditions();
-=======
                 if (state.hasSpace(j)){
                     state.play(j);
                     updateButtons();
                     bool done = checkWinningConditions();
->>>>>>> 5740def80fe5890f6d69a98021679d1cc775a84f
 
                     if (!done){
                         if (state.getEnabledAI()){
@@ -208,10 +196,5 @@ void GameInterface::setState(GameState state){
     if (state.getEnabledAI()){
         message = "Player vs AI";
     }
-<<<<<<< HEAD
-    statusBar->label(message);
-    updateButtons();
-=======
     // statusBar->label(message);
->>>>>>> 5740def80fe5890f6d69a98021679d1cc775a84f
 }

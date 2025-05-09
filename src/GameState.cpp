@@ -169,14 +169,10 @@ bool GameState::play(int col){
     // cout << "Must update state, including whose turn it is" << endl; 
     // cout << "and the last move, among other things." << endl;
 
-<<<<<<< HEAD
-    if( col<0 || col >= numCols || isFull() ||gameOver() || !hasSpace(col)){
-=======
     // if( col<0 || col >= numCols || isFull() ||gameOver()){
     //     return false;
     // }
     if(!hasSpace(col)) {
->>>>>>> 5740def80fe5890f6d69a98021679d1cc775a84f
         return false;
     }
 

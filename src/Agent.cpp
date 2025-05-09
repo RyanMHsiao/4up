@@ -222,5 +222,10 @@ Vec Agent::play(GameState state){
             }
     }
     std::cout << "Should be played at" << pos << std::endl;
+
+    //Incase there is a random index out of bounds occured as a result of the logic, will default to playing in left most column
+    if(pos >= root->neighbors.size()){
+        pos = 0;
+    }
     return root->neighbors[pos]->location->data.getLastMove();
 }
